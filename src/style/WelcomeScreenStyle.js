@@ -26,10 +26,10 @@ export const welcomestyle = StyleSheet.create({
     color: '#ffffff',
   },
   titleText2: {
-    fontSize: 32,
+    fontSize: 60,
     fontWeight: 'bold',
     textAlign: 'left',
-    color: '#f9d000',
+    color: '#ffffff',
   },
   // subtext
   subtext: {
@@ -38,25 +38,6 @@ export const welcomestyle = StyleSheet.create({
     color: '#ffffff',
   },
 
-  // image container
-  imageContainer: {
-    width: 350,
-    height: 258,
-    backgroundColor: '#2a70ed',
-    borderRadius: 20,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    position: 'relative',
-    marginBottom: 100,
-  },
-  // image
-  image: {
-    width: 350,
-    height: 350,
-    position: 'absolute',
-    bottom: 0,
-    zIndex: 10,
-  },
 
   // button container
   buttonContainer: {
@@ -71,14 +52,14 @@ export const welcomestyle = StyleSheet.create({
     alignItems: 'center',
     width: '55%',
     marginBottom: 16,
-    backgroundColor: '#fad10a',
+    backgroundColor: '#f26140',
   },
   // signup button text
   buttonText: {
     fontSize: 16,
     padding: 6,
     fontWeight: '600',
-    color: '#1c242e',
+    color: '#ecedf3',
   },
   // loginbutton
   buttonLogin: {

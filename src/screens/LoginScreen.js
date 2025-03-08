@@ -46,10 +46,10 @@ const LoginScreen = ({navigation}) => {
   };
 
   return (
-    // <ImageBackground
-    //   source={require('../../src/assets/overlay.jpg')}
-    //   style={loginstyle.background}
-    //   resizeMode="cover">
+    <ImageBackground 
+      source={require('../assets/formbg.jpg')}
+      style={loginstyle.container}
+      resizeMode="cover">
 
       <View style={loginstyle.container}>
         {/* Title and Description */}
@@ -92,7 +92,7 @@ const LoginScreen = ({navigation}) => {
           </ScrollView>
         </View>
       </View>
-    // </ImageBackground>
+     </ImageBackground>
   );
 };
 

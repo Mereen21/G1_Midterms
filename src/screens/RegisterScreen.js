@@ -31,9 +31,9 @@ const RegisterScreen = () => {
   
 
   return (
-    <ImageBackground
-      source={require('../../src/assets/overlay.jpg')} 
-      style={loginstyle.background}
+    <ImageBackground 
+      source={require('../assets/formbg.jpg')} // Update the path to your image
+      style={loginstyle.container}
       resizeMode="cover">
       <View style={loginstyle.container}>
         {/* Title and Description */}

@@ -1,11 +1,10 @@
 import React from 'react';
+import { Text, View, TouchableOpacity, Alert, ImageBackground } from 'react-native';
+import { welcomestyle } from '../style/WelcomeScreenStyle';
 
-import {Text, View, TouchableOpacity, Alert, Image} from 'react-native';
-import {welcomestyle} from '../style/WelcomeScreenStyle';
+// HANDLE FUNCTIONS
 
-//HANDLE FUNCTIONS
-
-//login functionm
+// login function
 const handleLogin = () => {
   Alert.alert('login');
 };
@@ -15,30 +14,24 @@ const handleRegister = () => {
   Alert.alert('register');
 };
 
-const WelcomeScreen = ({navigation}) => {
+const WelcomeScreen = ({ navigation }) => {
   return (
-    <View style={welcomestyle.container}>
-
+    <ImageBackground 
+      source={require('../assets/landingbg.jpg')} // Update the path to your image
+      style={welcomestyle.container}
+      resizeMode="cover" // You can change this to 'contain' or other options as needed
+    >
       {/* Title Section */}
       <View style={welcomestyle.titleContainer}>
-        <Text style={welcomestyle.titleText}>Welcome To</Text>
-        <Text style={welcomestyle.titleText2}>Litran Connect</Text>
-        <Text style={welcomestyle.subtext}>Lorem ipsum dolor</Text>
-      </View>
-
-      {/* Image Container with Background */}
-      <View style={welcomestyle.imageContainer}>
-        <Image
-          source={require('../assets/landingpagebg.png')}
-          style={welcomestyle.image}
-          resizeMode="contain"
-        />
+        <Text style={welcomestyle.titleText2}>VLSQZ</Text>
+        <Text style={welcomestyle.subtext}>Catering Services</Text>
       </View>
 
       {/* login button */}
       <TouchableOpacity
         style={welcomestyle.buttonLogin}
-        onPress={() => navigation.navigate('LoginScreen')}>
+        onPress={() => navigation.navigate('LoginScreen')}
+      >
         <Text style={welcomestyle.buttonTextLogin}>Login</Text>
       </TouchableOpacity>
 
@@ -46,11 +39,12 @@ const WelcomeScreen = ({navigation}) => {
       <View style={welcomestyle.buttonContainer}>
         <TouchableOpacity
           style={welcomestyle.button}
-          onPress={() => navigation.navigate('RegisterScreen')}>
+          onPress={() => navigation.navigate('RegisterScreen')}
+        >
           <Text style={welcomestyle.buttonText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 
