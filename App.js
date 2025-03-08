@@ -6,8 +6,8 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 // Screen Imports
 import WelcomeScreen from "./src/screens/WelcomeScreen";
-import RegisterScreen from "./src/screens/RegisterScreen";
-import LoginScreen from "./src/screens/LoginScreen";
+import RegisterScreen from "./src/screens/auth/RegisterScreen";
+import LoginScreen from "./src/screens/auth/LoginScreen";
 
 const Stack = createStackNavigator();
 

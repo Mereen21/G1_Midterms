@@ -9,7 +9,7 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import {loginstyle} from '../style/MainStyles';
+import {loginstyle} from '../../style/MainStyles';
 import axios from 'axios';
 
 const LoginScreen = ({navigation}) => {
@@ -47,7 +47,7 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <ImageBackground 
-      source={require('../assets/formbg.jpg')}
+      source={require('../../assets/formbg.jpg')}
       style={loginstyle.container}
       resizeMode="cover">
 
@@ -88,6 +88,11 @@ const LoginScreen = ({navigation}) => {
 
             <TouchableOpacity style={loginstyle.button} onPress={() => login()}>
               <Text style={loginstyle.buttonText}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
+            <Text style={loginstyle.signInText}>
+              Already have an account? <Text style={loginstyle.signInText}>Sign Up Here</Text>
+            </Text>
             </TouchableOpacity>
           </ScrollView>
         </View>
