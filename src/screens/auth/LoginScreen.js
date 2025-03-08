@@ -9,7 +9,7 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import {loginstyle} from '../style/MainStyles';
+import {loginstyle} from '../../style/MainStyles';
 import axios from 'axios';
 
 const LoginScreen = ({navigation}) => {
