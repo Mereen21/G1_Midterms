@@ -20,6 +20,11 @@ const RegisterScreen = ({navigation}) => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
 
+    // const handleInputChange = () => {
+  //   //much better if ganto ang onchangetext inyo sa mga textinput para ma check ang minimum requirements for register
+  // }
+
+
   return (
     <ImageBackground 
       source={require('../../assets/registerbg.jpg')}
@@ -89,6 +94,7 @@ const RegisterScreen = ({navigation}) => {
             <TouchableOpacity style={registerStyle.button} onPress={() => login()}>
               <Text style={registerStyle.buttonText}>Login</Text>
             </TouchableOpacity>
+            {/* mas okay if sign in here lang napipindot */}
             <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
             <Text style={registerStyle.signInText}>
               Already have an account? <Text style={registerStyle.signInText}>Sign in Here</Text>

@@ -22,8 +22,12 @@ const LoginScreen = ({navigation}) => {
   // "password": "klein*#%*"
 
   // login logic
+
+  // using our fakestore api di naman kasama to sa capstone niyo'
+
   const login = async () => {
     try {
+      //much better if chineck niyo dito mga minimum requirements if na meet mag eerror api call niyo pag missing parameters
       // api call
       const response = await axios.post('https://fakestoreapi.com/auth/login', {
         // send  input
@@ -44,6 +48,10 @@ const LoginScreen = ({navigation}) => {
       Alert.alert('Login Failed', 'Invalid credentials or server error');
     }
   };
+
+  // const handleInputChange = () => {
+  //   //much better if ganto ang onchangetext inyo sa mga textinput para ma check ang minimum requirements for login
+  // }
 
   return (
     <ImageBackground 
@@ -89,6 +97,7 @@ const LoginScreen = ({navigation}) => {
             <TouchableOpacity style={loginstyle.button} onPress={() => login()}>
               <Text style={loginstyle.buttonText}>Login</Text>
             </TouchableOpacity>
+            {/* mas okay if sign up here lang napipindot */}
             <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
             <Text style={loginstyle.signInText}>
               Already have an account? <Text style={loginstyle.signInText}>Sign Up Here</Text>

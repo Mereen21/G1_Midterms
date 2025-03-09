@@ -4,6 +4,9 @@ import { welcomestyle } from '../style/WelcomeScreenStyle';
 
 // HANDLE FUNCTIONS
 
+
+// may ganito kayong function di naman ginagamit ? 
+
 // login function
 const handleLogin = () => {
   Alert.alert('login');

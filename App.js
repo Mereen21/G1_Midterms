@@ -11,6 +11,9 @@ import LoginScreen from "./src/screens/auth/LoginScreen";
 
 const Stack = createStackNavigator();
 
+
+// ang daming comments ng chatgpt ah pakitanggal naman 
+
 const App = () => {
   return (
     <SafeAreaProvider style={{ flex: 1 }}> 

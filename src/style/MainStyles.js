@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 
+// bat may mainstyle may registerstyle at welcomescreenstyle ? may mga pareparehas naman na code
 export const loginstyle = StyleSheet.create({
   container: {
     flex: 1,
