@@ -75,9 +75,9 @@ export const loginstyle = StyleSheet.create({
   },
 
   inputGroup: {
-    width: '90%', 
-    marginHorizontal: 20, 
-    alignSelf: 'center', 
+    width: '90%',
+    marginHorizontal: 20,
+    alignSelf: 'center',
     marginBottom: 16,
     // marginTop: 8,
   },
@@ -96,7 +96,7 @@ export const loginstyle = StyleSheet.create({
     padding: 12,
     // backgroundColor: '#f7f7f7', //old bg color
     backgroundColor: '#f0eff2',
-    width: '100%', 
+    width: '100%',
   },
 
   button: {
@@ -106,8 +106,8 @@ export const loginstyle = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
     width: '90%',
-    alignSelf: 'center', 
-  },  
+    alignSelf: 'center',
+  },
 
   buttonText: {
     color: '#FFFFFF',
@@ -115,8 +115,9 @@ export const loginstyle = StyleSheet.create({
     fontWeight: '600',
   },
   signInText: {
-    color: "#4B382A",
-    fontWeight: "bold",
-    textAlign: "center"
+    color: '#4B382A',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 40,
   },
 });

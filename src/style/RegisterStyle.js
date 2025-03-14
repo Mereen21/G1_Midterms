@@ -118,6 +118,7 @@ export const registerStyle = StyleSheet.create({
   signInText: {
     color: "#4B382A",
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
+    marginTop: 40,
   },
 });
