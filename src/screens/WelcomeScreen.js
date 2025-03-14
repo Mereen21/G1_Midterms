@@ -2,27 +2,13 @@ import React from 'react';
 import { Text, View, TouchableOpacity, Alert, ImageBackground } from 'react-native';
 import { welcomestyle } from '../style/WelcomeScreenStyle';
 
-// HANDLE FUNCTIONS
-
-
-// may ganito kayong function di naman ginagamit ? 
-
-// login function
-const handleLogin = () => {
-  Alert.alert('login');
-};
-
-// register function
-const handleRegister = () => {
-  Alert.alert('register');
-};
 
 const WelcomeScreen = ({ navigation }) => {
   return (
     <ImageBackground 
-      source={require('../assets/landingbg.jpg')} // Update the path to your image
+      source={require('../assets/landingbg.jpg')} 
       style={welcomestyle.container}
-      resizeMode="cover" // You can change this to 'contain' or other options as needed
+      resizeMode="cover"
     >
       {/* Title Section */}
       <View style={welcomestyle.titleContainer}>

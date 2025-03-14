@@ -10,16 +10,12 @@ import {
   Alert,
 } from 'react-native';
 import {loginstyle} from '../../style/MainStyles';
-import axios from 'axios';
+import api from '../../../api';
 
 const LoginScreen = ({navigation}) => {
   // variables
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  //DEFAULT CREDENTIALS
-  // "username": "jimmie_k",
-  // "password": "klein*#%*"
+  const [username, setUsername] = useState('jimmie_k');
+  const [password, setPassword] = useState('klein*#%*');
 
   // login logic
 
@@ -27,24 +23,19 @@ const LoginScreen = ({navigation}) => {
 
   const login = async () => {
     try {
-      //much better if chineck niyo dito mga minimum requirements if na meet mag eerror api call niyo pag missing parameters
-      // api call
-      const response = await axios.post('https://fakestoreapi.com/auth/login', {
-        // send  input
+      const response = await api.post('/auth/login', {
         username: username,
         password: password,
       });
 
-      console.log('Response:', response.data); // Log response data
+      console.log('Response', response.data);
 
-      // display alert
-      Alert.alert('Login Successful!', `Token: ${response.data.token}`);
-    } catch (error) {
-
-      // error trapping
-      console.error('Login error:', error.response?.data || error.message);
-
-      // failed login
+      // testing if gumagana login from fakestore api
+      // Alert.alert('Login Successful', `Token: ${response.data.token}`);
+      navigation.navigate('UserLandingPage');
+    } 
+    catch (error) {
+      console.error('Login Error', error.response?.data || error.message);
       Alert.alert('Login Failed', 'Invalid credentials or server error');
     }
   };
@@ -54,11 +45,10 @@ const LoginScreen = ({navigation}) => {
   // }
 
   return (
-    <ImageBackground 
+    <ImageBackground
       source={require('../../assets/formbg.jpg')}
       style={loginstyle.container}
       resizeMode="cover">
-
       <View style={loginstyle.container}>
         {/* Title and Description */}
         <View style={loginstyle.titleContainer}>
@@ -98,15 +88,17 @@ const LoginScreen = ({navigation}) => {
               <Text style={loginstyle.buttonText}>Login</Text>
             </TouchableOpacity>
             {/* mas okay if sign up here lang napipindot */}
-            <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
-            <Text style={loginstyle.signInText}>
-              Already have an account? <Text style={loginstyle.signInText}>Sign Up Here</Text>
-            </Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('RegisterScreen')}>
+              <Text style={loginstyle.signInText}>
+                Already have an account?{' '}
+                <Text style={loginstyle.signInText}>Sign Up Here</Text>
+              </Text>
             </TouchableOpacity>
           </ScrollView>
         </View>
       </View>
-     </ImageBackground>
+    </ImageBackground>
   );
 };
 
