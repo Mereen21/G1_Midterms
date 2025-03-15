@@ -96,8 +96,8 @@ const SellerDashboard = () => {
 
   return (
     <ScrollView contentContainerStyle={sellerDashstyles.container}>
-      <Text variant="headlineLarge">Home</Text>
-    
+      <Text variant="headlineLarge">Welcome, Staff</Text>
+    <View style={sellerDashstyles.body}>
        {/* SALES */}
        <Card mode="elevated" style={sellerDashstyles.card}>
         <Card.Content>
@@ -269,11 +269,7 @@ const SellerDashboard = () => {
         </Card>
     </View>
     </View>
-
-
-
-
-
+    </View>
     </ScrollView>
   );
 };

@@ -5,8 +5,11 @@ export const sellerDashstyles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#ffffff"
   },
+  body:{
+    margin:20
+  },
   card: {
-    marginTop: 16,
+    marginTop: 20,
     padding: 5,
     paddingRight:10,
     elevation: 4, 
