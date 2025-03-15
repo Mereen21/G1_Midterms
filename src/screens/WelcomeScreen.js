@@ -17,20 +17,20 @@ const WelcomeScreen = ({ navigation }) => {
       </View>
 
       {/* login button */}
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={welcomestyle.buttonLogin}
         onPress={() => navigation.navigate('LoginScreen')}
       >
         <Text style={welcomestyle.buttonTextLogin}>Login</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
-      {/* Register button */}
+      {/* Get Started */}
       <View style={welcomestyle.buttonContainer}>
         <TouchableOpacity
           style={welcomestyle.button}
-          onPress={() => navigation.navigate('RegisterScreen')}
+          onPress={() => navigation.navigate('LoginScreen')}
         >
-          <Text style={welcomestyle.buttonText}>Sign Up</Text>
+          <Text style={welcomestyle.buttonText}>Get Started</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>

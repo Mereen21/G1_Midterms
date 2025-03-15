@@ -15,7 +15,7 @@ export const welcomestyle = StyleSheet.create({
   // title container
   titleContainer: {
     position: 'absolute',
-    top: 50, // Adjust as needed
+    top: 50, 
     left: 40,
     width: '100%',
     alignItems: 'left',

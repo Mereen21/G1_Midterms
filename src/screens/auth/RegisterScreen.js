@@ -10,7 +10,7 @@ import {
   Alert,
   StyleSheet,
 } from 'react-native';
-import { registerStyle } from '../../style/RegisterStyle';
+import { mainStyle } from '../../style/MainStyles';
 import axios from 'axios';
 
 const RegisterScreen = ({ navigation }) => {
@@ -142,87 +142,87 @@ const RegisterScreen = ({ navigation }) => {
   return (
     <ImageBackground
       source={require('../../assets/registerbg.jpg')}
-      style={registerStyle.container}
+      style={mainStyle.container}
       resizeMode="cover">
 
-      <View style={registerStyle.container}>
+      <View style={mainStyle.container}>
         {/* Title and Description */}
-        <View style={registerStyle.titleContainer}>
-          <Text style={registerStyle.registerTitle}>Create An Account</Text>
-          <Text style={registerStyle.description}>
+        <View style={mainStyle.titleContainer}>
+          <Text style={mainStyle.registerTitle}>Create An Account</Text>
+          <Text style={mainStyle.description}>
             Enter your Credentials
           </Text>
         </View>
 
         {/* login Card */}
-        <View style={registerStyle.card}>
+        <View style={mainStyle.card}>
           <ScrollView showsVerticalScrollIndicator={false}>
             {/* Username Input */}
-            <View style={registerStyle.inputGroup}>
-              <Text style={registerStyle.label}>Username</Text>
+            <View style={mainStyle.inputGroup}>
+              <Text style={mainStyle.label}>Username</Text>
               <TextInput
-                style={[registerStyle.textInput, usernameError ? registerStyle.inputError : null]}
+                style={[mainStyle.textInput, usernameError ? mainStyle.inputError : null]}
                 placeholder="Enter Username"
                 value={username}
                 onChangeText={validateName}
               />
-              {usernameError ? <Text style={registerStyle.errorText}>{usernameError}</Text> : null}
+              {usernameError ? <Text style={mainStyle.errorText}>{usernameError}</Text> : null}
             </View>
 
             {/* Email Input */}
-            <View style={registerStyle.inputGroup}>
-              <Text style={registerStyle.label}>Email</Text>
+            <View style={mainStyle.inputGroup}>
+              <Text style={mainStyle.label}>Email</Text>
               <TextInput
-                style={[registerStyle.textInput, emailError ? registerStyle.inputError : null]}
+                style={[mainStyle.textInput, emailError ? mainStyle.inputError : null]}
                 placeholder="Enter Email"
                 value={email}
                 onChangeText={validateEmail}
                 keyboardType="email-address"
               />
-              {emailError ? <Text style={registerStyle.errorText}>{emailError}</Text> : null}
+              {emailError ? <Text style={mainStyle.errorText}>{emailError}</Text> : null}
             </View>
 
             {/* Password Input */}
-            <View style={registerStyle.inputGroup}>
-              <Text style={registerStyle.label}>Password</Text>
+            <View style={mainStyle.inputGroup}>
+              <Text style={mainStyle.label}>Password</Text>
               <TextInput
-                style={[registerStyle.textInput, passwordError ? registerStyle.inputError : null]}
+                style={[mainStyle.textInput, passwordError ? mainStyle.inputError : null]}
                 placeholder="Enter Password"
                 value={password}
                 secureTextEntry={true}
                 onChangeText={validatePassword}
               />
-              {passwordError ? <Text style={registerStyle.errorText}>{passwordError}</Text> : null}
+              {passwordError ? <Text style={mainStyle.errorText}>{passwordError}</Text> : null}
             </View>
 
             {/* ConfirmPassword Input */}
-            <View style={registerStyle.inputGroup}>
-              <Text style={registerStyle.label}>Confirm Password</Text>
+            <View style={mainStyle.inputGroup}>
+              <Text style={mainStyle.label}>Confirm Password</Text>
               <TextInput
                 placeholder="Re-Enter Password"
                 value={confirmPassword}
-                style={[registerStyle.textInput, confirmPasswordError ? registerStyle.inputError : null]}
+                style={[mainStyle.textInput, confirmPasswordError ? mainStyle.inputError : null]}
                 onChangeText={validateConfirmPassword}
                 secureTextEntry={true} // Hide password input
               />
-              {confirmPasswordError ? <Text style={registerStyle.errorText}>{confirmPasswordError}</Text> : null}
+              {confirmPasswordError ? <Text style={mainStyle.errorText}>{confirmPasswordError}</Text> : null}
             </View>
 
 
             <TouchableOpacity
-              style={[registerStyle.button, isSubmitting ? { opacity: 0.5 } : {}]}
+              style={[mainStyle.button, isSubmitting ? { opacity: 0.5 } : {}]}
               onPress={handleContinue}
               disabled={isSubmitting}
             >
-              <Text style={registerStyle.buttonText}>
+              <Text style={mainStyle.buttonText}>
                 {isSubmitting ? "Registering..." : "Register"}
               </Text>
             </TouchableOpacity>
             {/* mas okay if sign in here lang napipindot */}
 
             <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-              <Text style={registerStyle.signInText}>
-                Already have an account? <Text style={registerStyle.signInText}>Sign in Here</Text>
+              <Text style={mainStyle.signInText}>
+                Already have an account? <Text style={mainStyle.signInText}>Sign in Here</Text>
               </Text>
             </TouchableOpacity>
           </ScrollView>

@@ -1,11 +1,12 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f2f6fe',
     padding: 15,
   },
+  
   searchBar: {
     backgroundColor: '#f0f0f0',
     padding: 10,
@@ -30,11 +31,11 @@ export default StyleSheet.create({
     fontSize: 12,
   },
   userAvatar: {
-    width: 50, 
-    height: 50, 
-    borderRadius: 25, 
-    borderWidth: 2, 
-    borderColor: '#ddd', 
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    borderWidth: 2,
+    borderColor: '#ddd',
   },
   featuredItem: {
     flexDirection: 'row',
@@ -43,7 +44,7 @@ export default StyleSheet.create({
   },
   featuredImage: {
     width: '100%',
-    height: 200, 
+    height: 200,
     borderRadius: 10,
     overflow: 'hidden',
   },
@@ -99,4 +100,43 @@ export default StyleSheet.create({
     textAlign: 'center',
     marginTop: 5,
   },
+  searchBar: {
+    backgroundColor: '#f0f0f0',
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 15,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+
+  featuredButton: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    backgroundColor: '#f26140',
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+  },
+
+  featuredButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  gradientOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: '100%', 
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    borderBottomLeftRadius: 10, 
+    borderBottomRightRadius: 10, 
+  },
+  
 });
