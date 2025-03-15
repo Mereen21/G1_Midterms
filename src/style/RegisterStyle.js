@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 // bat may mainstyle may registerstyle at welcomescreenstyle ? may mga pareparehas naman na code
 
@@ -62,7 +62,7 @@ export const registerStyle = StyleSheet.create({
     borderTopRightRadius: 25,
     shadowColor: '#000',
     shadowOpacity: 0.1,
-    shadowOffset: {width: 0, height: -2},
+    shadowOffset: { width: 0, height: -2 },
     elevation: 5,
     paddingTop: 40,
   },
@@ -76,9 +76,9 @@ export const registerStyle = StyleSheet.create({
   },
 
   inputGroup: {
-    width: '90%', 
-    marginHorizontal: 20, 
-    alignSelf: 'center', 
+    width: '90%',
+    marginHorizontal: 20,
+    alignSelf: 'center',
     marginBottom: 16,
     // marginTop: 8,
   },
@@ -97,7 +97,7 @@ export const registerStyle = StyleSheet.create({
     padding: 12,
     // backgroundColor: '#f7f7f7', //old bg color
     backgroundColor: '#f0eff2',
-    width: '100%', 
+    width: '100%',
   },
 
   button: {
@@ -107,8 +107,8 @@ export const registerStyle = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
     width: '90%',
-    alignSelf: 'center', 
-  },  
+    alignSelf: 'center',
+  },
 
   buttonText: {
     color: '#FFFFFF',
@@ -120,5 +120,23 @@ export const registerStyle = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginTop: 40,
+  },
+
+  //error handling
+  input: {
+    width: "100%",
+    height: 50,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  inputError: {
+    borderColor: "red",
+  },
+  errorText: {
+    color: "red",
+    marginBottom: 8,
   },
 });

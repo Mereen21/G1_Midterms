@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
@@ -8,25 +8,126 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  StyleSheet,
 } from 'react-native';
 import { registerStyle } from '../../style/RegisterStyle';
 import axios from 'axios';
 
-const RegisterScreen = ({navigation}) => {
+const RegisterScreen = ({ navigation }) => {
   // variables
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  // errorhandling
+  const [usernameError, setUsernameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
-    // const handleInputChange = () => {
+
+  // const handleInputChange = () => {
   //   //much better if ganto ang onchangetext inyo sa mga textinput para ma check ang minimum requirements for register
   // }
 
+  const validateName = (text) => {
+    setUsername(text);
+    if (text === "") {
+      setUsernameError("");
+    } else if (text.length < 4) {
+      setUsernameError("Name must be at least 4 characters.");
+    } else {
+      setUsernameError("");
+    }
+  };
+
+  const validateEmail = (text) => {
+    setEmail(text);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (text === "") {
+      setEmailError("");
+    } else if (!emailRegex.test(text)) {
+      setEmailError("Enter a valid email address.");
+    } else {
+      setEmailError("");
+    }
+  };
+
+  const validatePassword = (text) => {
+    setPassword(text);
+    if (text === "") {
+      setPasswordError("");
+    } else if (text.length < 6) {
+      setPasswordError("Must be at least 6 characters.");
+    } else {
+      setPasswordError("");
+    }
+  };
+
+  const validateConfirmPassword = (text) => {
+    setConfirmPassword(text);
+    if (text === "") {
+      setConfirmPasswordError("");
+    } else if (text !== password) {
+      setConfirmPasswordError("Passwords do not match.");
+    } else {
+      setConfirmPasswordError("");
+    }
+  };
+
+  const handleContinue = () => {
+    let isValid = true;
+
+    let newUsernameError = "";
+    let newEmailError = "";
+    let newPasswordError = "";
+    let newConfirmPasswordError = "";
+
+    if (username === "") {
+      newUsernameError = "This field is required.";
+      isValid = false;
+    } else if (username.length < 4) {
+      newUsernameError = "Name must be at least 4 characters.";
+      isValid = false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email === "") {
+      newEmailError = "This field is required.";
+      isValid = false;
+    } else if (!emailRegex.test(email)) {
+      newEmailError = "Enter a valid email address.";
+      isValid = false;
+    }
+
+    if (password === "") {
+      newPasswordError = "This field is required.";
+      isValid = false;
+    } else if (password.length < 6) {
+      newPasswordError = "Must be at least 6 characters.";
+      isValid = false;
+    }
+
+    if (password !== confirmPassword) {
+      setConfirmPasswordError("Passwords do not match.");
+      isValid = false;
+    }
+
+    // Update all errors at once
+    setUsernameError(newUsernameError);
+    setEmailError(newEmailError);
+    setPasswordError(newPasswordError);
+
+    // Navigate only if all inputs are valid
+    if (isValid) {
+      navigation.navigate("LoginScreen");
+    }
+  };
+
 
   return (
-    <ImageBackground 
+    <ImageBackground
       source={require('../../assets/registerbg.jpg')}
       style={registerStyle.container}
       resizeMode="cover">
@@ -47,63 +148,68 @@ const RegisterScreen = ({navigation}) => {
             <View style={registerStyle.inputGroup}>
               <Text style={registerStyle.label}>Username</Text>
               <TextInput
-                placeholder=""
+                style={[registerStyle.textInput, usernameError ? registerStyle.inputError : null]}
+                placeholder=" "
                 value={username}
-                style={registerStyle.textInput}
-                onChangeText={text => setUsername(text)}
+                onChangeText={validateName}
               />
+              {usernameError ? <Text style={registerStyle.errorText}>{usernameError}</Text> : null}
             </View>
 
-             {/* Email Input */}
-             <View style={registerStyle.inputGroup}>
+            {/* Email Input */}
+            <View style={registerStyle.inputGroup}>
               <Text style={registerStyle.label}>Email</Text>
               <TextInput
+                style={[registerStyle.textInput, emailError ? registerStyle.inputError : null]}
                 placeholder=""
-                keyboardType="email-address"
                 value={email}
-                style={registerStyle.textInput}
-                onChangeText={text => setEmail(text)}
+                onChangeText={validateEmail}
+                keyboardType="email-address"
               />
+              {emailError ? <Text style={registerStyle.errorText}>{emailError}</Text> : null}
             </View>
 
             {/* Password Input */}
             <View style={registerStyle.inputGroup}>
               <Text style={registerStyle.label}>Password</Text>
               <TextInput
+                style={[registerStyle.textInput, passwordError ? registerStyle.inputError : null]}
                 placeholder=""
                 value={password}
-                style={registerStyle.textInput}
                 secureTextEntry={true}
-                onChangeText={text => setPassword(text)}
+                onChangeText={validatePassword}
               />
+              {passwordError ? <Text style={registerStyle.errorText}>{passwordError}</Text> : null}
             </View>
 
-            {/* Password Input */}
+            {/* ConfirmPassword Input */}
             <View style={registerStyle.inputGroup}>
               <Text style={registerStyle.label}>Confirm Password</Text>
               <TextInput
                 placeholder=""
                 value={confirmPassword}
-                style={registerStyle.textInput}
-                secureTextEntry={true}
-                onChangeText={text =>  setConfirmPassword(text)}
+                style={[registerStyle.textInput, confirmPasswordError ? registerStyle.inputError : null]}
+                onChangeText={validateConfirmPassword}
+                secureTextEntry={true} // Hide password input
               />
+              {confirmPasswordError ? <Text style={registerStyle.errorText}>{confirmPasswordError}</Text> : null}
             </View>
 
 
-            <TouchableOpacity style={registerStyle.button} onPress={() => login()}>
-              <Text style={registerStyle.buttonText}>Login</Text>
+            <TouchableOpacity style={registerStyle.button} onPress={handleContinue}>
+              <Text style={registerStyle.buttonText}>Register</Text>
             </TouchableOpacity>
             {/* mas okay if sign in here lang napipindot */}
+
             <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-            <Text style={registerStyle.signInText}>
-              Already have an account? <Text style={registerStyle.signInText}>Sign in Here</Text>
-            </Text>
+              <Text style={registerStyle.signInText}>
+                Already have an account? <Text style={registerStyle.signInText}>Sign in Here</Text>
+              </Text>
             </TouchableOpacity>
           </ScrollView>
         </View>
       </View>
-     </ImageBackground>
+    </ImageBackground>
   );
 };
 
