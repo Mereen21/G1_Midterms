@@ -119,7 +119,7 @@ export const registerStyle = StyleSheet.create({
     color: "#4B382A",
     fontWeight: "bold",
     textAlign: "center",
-    marginTop: 40,
+    marginTop: 10,
   },
 
   //error handling

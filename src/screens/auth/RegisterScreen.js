@@ -76,7 +76,12 @@ const RegisterScreen = ({ navigation }) => {
     }
   };
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleContinue = () => {
+    if (isSubmitting) return; // Prevent multiple clicks
+
+    setIsSubmitting(true); // Disable button
     let isValid = true;
 
     let newUsernameError = "";
@@ -109,8 +114,11 @@ const RegisterScreen = ({ navigation }) => {
       isValid = false;
     }
 
-    if (password !== confirmPassword) {
-      setConfirmPasswordError("Passwords do not match.");
+    if (confirmPassword === "") {
+      newConfirmPasswordError = "This field is required.";
+      isValid = false;
+    } else if (confirmPassword !== password) {
+      newConfirmPasswordError = "Passwords do not match.";
       isValid = false;
     }
 
@@ -118,10 +126,15 @@ const RegisterScreen = ({ navigation }) => {
     setUsernameError(newUsernameError);
     setEmailError(newEmailError);
     setPasswordError(newPasswordError);
+    setConfirmPasswordError(newConfirmPasswordError);
 
-    // Navigate only if all inputs are valid
     if (isValid) {
-      navigation.navigate("LoginScreen");
+      setTimeout(() => {
+        navigation.navigate("LoginScreen");
+        setIsSubmitting(false);
+      }, 1000);
+    } else {
+      setIsSubmitting(false);
     }
   };
 
@@ -149,7 +162,7 @@ const RegisterScreen = ({ navigation }) => {
               <Text style={registerStyle.label}>Username</Text>
               <TextInput
                 style={[registerStyle.textInput, usernameError ? registerStyle.inputError : null]}
-                placeholder=" "
+                placeholder="Enter Username"
                 value={username}
                 onChangeText={validateName}
               />
@@ -161,7 +174,7 @@ const RegisterScreen = ({ navigation }) => {
               <Text style={registerStyle.label}>Email</Text>
               <TextInput
                 style={[registerStyle.textInput, emailError ? registerStyle.inputError : null]}
-                placeholder=""
+                placeholder="Enter Email"
                 value={email}
                 onChangeText={validateEmail}
                 keyboardType="email-address"
@@ -174,7 +187,7 @@ const RegisterScreen = ({ navigation }) => {
               <Text style={registerStyle.label}>Password</Text>
               <TextInput
                 style={[registerStyle.textInput, passwordError ? registerStyle.inputError : null]}
-                placeholder=""
+                placeholder="Enter Password"
                 value={password}
                 secureTextEntry={true}
                 onChangeText={validatePassword}
@@ -186,7 +199,7 @@ const RegisterScreen = ({ navigation }) => {
             <View style={registerStyle.inputGroup}>
               <Text style={registerStyle.label}>Confirm Password</Text>
               <TextInput
-                placeholder=""
+                placeholder="Re-Enter Password"
                 value={confirmPassword}
                 style={[registerStyle.textInput, confirmPasswordError ? registerStyle.inputError : null]}
                 onChangeText={validateConfirmPassword}
@@ -196,8 +209,14 @@ const RegisterScreen = ({ navigation }) => {
             </View>
 
 
-            <TouchableOpacity style={registerStyle.button} onPress={handleContinue}>
-              <Text style={registerStyle.buttonText}>Register</Text>
+            <TouchableOpacity
+              style={[registerStyle.button, isSubmitting ? { opacity: 0.5 } : {}]}
+              onPress={handleContinue}
+              disabled={isSubmitting}
+            >
+              <Text style={registerStyle.buttonText}>
+                {isSubmitting ? "Registering..." : "Register"}
+              </Text>
             </TouchableOpacity>
             {/* mas okay if sign in here lang napipindot */}
 
