@@ -10,6 +10,7 @@ import RegisterScreen from './src/screens/auth/RegisterScreen';
 import LoginScreen from './src/screens/auth/LoginScreen';
 import UserLandingPage from './src/screens/User/UserLandingPage';
 import SellerDashboard from './src/screens/seller/SellerDashboard';
+import AdminPageScreen from './src/screens/Admin/AdminPageScreen';
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,7 @@ const App = () => {
               <Stack.Screen name="LoginScreen" component={LoginScreen} />
               <Stack.Screen name="UserLandingPage" component={UserLandingPage} />
               <Stack.Screen name="SellerDashboard" component={SellerDashboard} />
+              <Stack.Screen name="AdminPageScreen" component={AdminPageScreen} />
             </Stack.Navigator>
           </NavigationContainer>
         </GestureHandlerRootView>
