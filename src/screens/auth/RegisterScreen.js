@@ -187,7 +187,7 @@ const RegisterScreen = ({ navigation }) => {
               <Text style={registerStyle.label}>Password</Text>
               <TextInput
                 style={[registerStyle.textInput, passwordError ? registerStyle.inputError : null]}
-                placeholder="Enter Password"
+                placeholder="Enter your Password"
                 value={password}
                 secureTextEntry={true}
                 onChangeText={validatePassword}
