@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,83 +6,113 @@ import {
   Image,
   FlatList,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
+
+// react native paper imports
+import { SegmentedButtons } from 'react-native-paper';
+
 import styles from '../../style/UserStyles/UserLandingPageStyle';
 
 // images
 import featuredbg from '../../assets/user-items/featuredbg.jpg';
+import avatar from '../../assets/user-items/avatar.jpg';
 
+// food tray items
 const foodTrays = [
   {
     id: '1',
     name: 'Pork',
-    image: 'https://via.placeholder.com/80',
+    image: 'https://www.mcatering.ph/wp-content/uploads/2021/07/roast-beef-belly-in-mushroom-sauce.jpg',
   },
   {
     id: '2',
     name: 'Beef',
-    image: 'https://via.placeholder.com/80',
+    image: 'https://www.mcatering.ph/wp-content/uploads/2022/11/Tender-Pork-Ribs-with-Peach-Barbecue-Sauce-and-Cajun-Potato-Wedges.jpg',
   },
   {
     id: '3',
     name: 'Chicken',
-    image: 'https://via.placeholder.com/80',
+    image: 'https://www.mcatering.ph/wp-content/uploads/2021/07/roast-chicken-in-rosemary-honey-mustard-sauce.jpg',
   },
   {
     id: '4',
     name: 'Seafood',
-    image: 'https://via.placeholder.com/80',
+    image: 'https://www.mcatering.ph/wp-content/uploads/2021/07/gambas-al-ajillo.jpg',
   },
   {
     id: '5',
     name: 'Pasta/Noodles',
-    image: 'https://via.placeholder.com/80',
+    image: 'https://www.mcatering.ph/wp-content/uploads/2021/07/mushroom-bacon-carbonara.jpg',
   },
   {
     id: '6',
-    name: 'Vegtables',
-    image: 'https://via.placeholder.com/80',
+    name: 'Desserts',
+    image: 'https://www.mcatering.ph/wp-content/uploads/2022/11/Ube-Buko-Jelly.jpg',
   },
 ];
 
 const UserLandingPage = () => {
-  // default number of columns
-  // set to 3, adjust if may idadagdag sa categories
   const [numColumns, setNumColumns] = useState(3);
+  const [option, setOption] = useState('');
 
   return (
     <View style={styles.container}>
-      {/* Search Bar */}
-      {/* <TextInput placeholder="Search" style={styles.searchBar} /> */}
-
       {/* Delivery Section */}
       <View style={styles.deliveryContainer}>
-        <Text style={styles.welcomeTitle}>Welcome Back!</Text>
-        <Text style={styles.welcomeName}>John Cena</Text>
+        <View style={styles.deliveryTextContainer}>
+          <Text style={styles.welcomeName}>Hello John</Text>
+          <Text style={styles.welcomeTitle}>Hungry Now?</Text>
+        </View>
+
+        {/* User Avatar */}
+        <Image source={avatar} style={styles.userAvatar} />
+
       </View>
 
-      <View style={styles.featuredItem}>
-        <Image source={featuredbg} style={styles.featuredImage} />
+      <View style={styles.sectionButtonContainer}>
+        <View style={styles.segmentedButtonWrapper}>
+          <SegmentedButtons
+            value={option}
+            onValueChange={setOption}
+            buttons={[
+              {
+                value: 'foodOrder',
+                label: 'Food Trays',
+              },
+              {
+                value: 'cateringServices',
+                label: 'Catering Services',
+              },
+            ]}
+          />
+        </View>
+      </View>
 
-        <View style={styles.featuredText}>
+      <TextInput placeholder="Search" style={styles.searchBar} />
+
+      <View style={styles.featuredItem}>
+        {/* <Image source={featuredbg} style={styles.featuredImage} /> */}
+        <ImageBackground source={featuredbg} style={styles.featuredImage}>
+        {/* <View style={styles.featuredText}>
           <Text style={styles.featuredTitle}>Crafted For Every</Text>
           <Text style={styles.featuredTitle}>Celebration</Text>
           <TouchableOpacity style={styles.browseButton}>
             <Text style={styles.orderText}>Browse Menu</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
+        </ImageBackground>
       </View>
 
-      {/* Top of the Week */}
-      <Text style={styles.sectionTitle}>Top of the Week</Text>
+      <Text style={styles.sectionTitle}>Our Food Trays</Text>
       <FlatList
         data={foodTrays}
         numColumns={numColumns}
         key={numColumns.toString()}
         keyExtractor={item => item.id}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <View style={styles.foodCard}>
-            <Image source={{uri: item.image}} style={styles.foodImage} />
+            <Image source={{ uri: item.image }} style={styles.foodImage} />
             <Text style={styles.foodName}>{item.name}</Text>
           </View>
         )}
