@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import { Snackbar } from 'react-native-paper';
 import { mainStyle } from '../../style/MainStyles';
 import api from '../../../api';
 
@@ -16,7 +17,9 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState('klein*#%*');
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [errorField, setErrorField] = useState('');
+  const [errorField, setErrorField] = useState('');  
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
   const handleInputChange = (text, field) => {
     if (field === 'username') {
@@ -41,22 +44,27 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const login = async () => {
-    let hasError = false;
-
-    if (username.length < 3) {
-      setUsernameError('Username must be at least 3 characters');
-      setErrorField('username');
-      hasError = true;
-    }
-    if (password.length < 6) {
-      setPasswordError('Password must be at least 6 characters');
-      setErrorField('password');
-      hasError = true;
-    }
-
-    if (hasError) return;
-
     try {
+      if (!username.trim() || !password.trim()) {
+        setSnackbarMessage('Username and password are required.');
+        setSnackbarVisible(true);
+        return;
+      }
+
+      //DEMO CREDENTIALS
+      if (username === 'johnd' && password === 'm38rmF$') {
+        setSnackbarMessage('Admin Login Successful');
+        setSnackbarVisible(true);
+        setTimeout(() => navigation.navigate('AdminPageScreen'), 1000);
+        return;
+      }
+      if (username === 'mor_2314' && password === '83r5^_') {
+        setSnackbarMessage('Seller Login Successful');
+        setSnackbarVisible(true);
+        setTimeout(() => navigation.navigate('SellerDashboard'), 1000);
+        return;
+      }
+
       const response = await api.post('/auth/login', { username, password });
       console.log('Response', response.data);
       navigation.navigate('UserLandingPage');
@@ -65,8 +73,11 @@ const LoginScreen = ({ navigation }) => {
       setUsernameError('Invalid username or password');
       setPasswordError('');
       setErrorField('username');
+      setSnackbarMessage('Invalid login credentials');
+      setSnackbarVisible(true);
     }
   };
+
 
   return (
     <ImageBackground
@@ -82,6 +93,14 @@ const LoginScreen = ({ navigation }) => {
 
         <View style={mainStyle.card}>
           <ScrollView showsVerticalScrollIndicator={false}>
+             
+               {/* DEMO CREDENTIALS */}
+            <View style={mainStyle.demoContainer}>
+              <Text style={mainStyle.demoTitle}>Demo Accounts:</Text>
+              <Text style={mainStyle.demoText}>👤 Admin: johnd | 🔑 m38rmF$</Text>
+              <Text style={mainStyle.demoText}>👤 Seller: mor_2314 | 🔑 83r5^_</Text>
+            </View>
+
             {/* Username Input */}
             <View style={mainStyle.inputGroup}>
               <Text style={mainStyle.label}>Username</Text>
@@ -117,14 +136,29 @@ const LoginScreen = ({ navigation }) => {
               <Text style={mainStyle.buttonText}>Login</Text>
             </TouchableOpacity>
 
+           
+            <TouchableOpacity disabled={true}>
+            <Text style={mainStyle.signInText}>Don't have an account? </Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
-              <Text style={mainStyle.signInText}>
-                Already have an account? <Text style={mainStyle.signInText}>Sign Up Here</Text>
-              </Text>
+              <Text style={[mainStyle.signInText, { textDecorationLine: 'underline' }]}>Sign Up Here</Text>
             </TouchableOpacity>
           </ScrollView>
         </View>
       </View>
+
+
+
+            {/* Snackbar Notification */}
+            <Snackbar
+              visible={snackbarVisible}
+              onDismiss={() => setSnackbarVisible(false)}
+              duration={3000}
+            >
+              {snackbarMessage}
+            </Snackbar>
+     
+ 
     </ImageBackground>
   );
 };

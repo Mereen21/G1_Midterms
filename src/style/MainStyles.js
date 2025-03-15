@@ -123,4 +123,28 @@ export const mainStyle = StyleSheet.create({
   inputError: {
     borderColor: 'red',
   },
+  demoContainer: {
+    marginTop: 20,
+    padding: 15,
+    backgroundColor: '#f8f9fa',
+    borderRadius: 10,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ddd', 
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  demoTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 5,
+  },
+  demoText: {
+    fontSize: 14,
+    color: '#555',
+  },
 });

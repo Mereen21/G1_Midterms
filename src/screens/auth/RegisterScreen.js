@@ -79,9 +79,9 @@ const RegisterScreen = ({ navigation }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleContinue = () => {
-    if (isSubmitting) return; // Prevent multiple clicks
+    if (isSubmitting) return; 
 
-    setIsSubmitting(true); // Disable button
+    setIsSubmitting(true); 
     let isValid = true;
 
     let newUsernameError = "";
@@ -122,7 +122,7 @@ const RegisterScreen = ({ navigation }) => {
       isValid = false;
     }
 
-    // Update all errors at once
+    // Update errors
     setUsernameError(newUsernameError);
     setEmailError(newEmailError);
     setPasswordError(newPasswordError);
@@ -203,7 +203,7 @@ const RegisterScreen = ({ navigation }) => {
                 value={confirmPassword}
                 style={[mainStyle.textInput, confirmPasswordError ? mainStyle.inputError : null]}
                 onChangeText={validateConfirmPassword}
-                secureTextEntry={true} // Hide password input
+                secureTextEntry={true} 
               />
               {confirmPasswordError ? <Text style={mainStyle.errorText}>{confirmPasswordError}</Text> : null}
             </View>
@@ -218,13 +218,14 @@ const RegisterScreen = ({ navigation }) => {
                 {isSubmitting ? "Registering..." : "Register"}
               </Text>
             </TouchableOpacity>
-            {/* mas okay if sign in here lang napipindot */}
-
-            <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-              <Text style={mainStyle.signInText}>
-                Already have an account? <Text style={mainStyle.signInText}>Sign in Here</Text>
-              </Text>
+    
+            <TouchableOpacity disabled={true}>
+            <Text style={mainStyle.signInText}>Already have an account? </Text>
             </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+              <Text style={[mainStyle.signInText, { textDecorationLine: 'underline' }]}>Sign in Here</Text>
+            </TouchableOpacity>
+
           </ScrollView>
         </View>
       </View>
