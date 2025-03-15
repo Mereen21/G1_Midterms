@@ -11,6 +11,7 @@ import LoginScreen from './src/screens/auth/LoginScreen';
 import UserLandingPage from './src/screens/User/UserLandingPage';
 import SellerDashboard from './src/screens/seller/SellerDashboard';
 import AdminPageScreen from './src/screens/Admin/AdminPageScreen';
+import EditProfileScreen from './src/screens/seller/EditProfile';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,7 @@ const App = () => {
               <Stack.Screen name="UserLandingPage" component={UserLandingPage} />
               <Stack.Screen name="SellerDashboard" component={SellerDashboard} />
               <Stack.Screen name="AdminPageScreen" component={AdminPageScreen} />
+              <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
             </Stack.Navigator>
           </NavigationContainer>
         </GestureHandlerRootView>

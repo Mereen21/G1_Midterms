@@ -8,10 +8,34 @@ export const sellerDashstyles = StyleSheet.create({
   body:{
     margin:20
   },
+  deliveryContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 10,
+    marginBottom: 15,
+  },
+  deliveryTextContainer: {},
+  welcomeTitle: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: '#2e2e2e',
+  },
+  welcomeName: {
+    color: '#2e2e2e',
+    fontSize: 12,
+  },
+  userAvatar: {
+    width: 50, 
+    height: 50, 
+    borderRadius: 25, 
+    borderWidth: 2, 
+    borderColor: '#ddd', 
+  },
   card: {
     marginTop: 20,
     padding: 5,
-    paddingRight:10,
+    paddingRight:20,
     elevation: 4, 
     backgroundColor: "#ffffff", 
     borderRadius: 10, 
@@ -19,12 +43,16 @@ export const sellerDashstyles = StyleSheet.create({
   },
   filterButtonContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    flexWrap: "wrap", 
+    justifyContent: "space-evenly", 
     marginBottom: 10,
-    
+    paddingHorizontal: 10, 
   },
-  btnColor:{
-    backgroundColor:"#2D9C5A"
+  button: {
+    flexShrink: 1, 
+    minWidth: 90, 
+    marginHorizontal: 5, 
+    fontSize:20,
   },
   chartLabel: {
     fontSize: 18,
@@ -33,15 +61,19 @@ export const sellerDashstyles = StyleSheet.create({
     marginBottom: 10, 
   },
   chartContainer: {
+    width: "100%", 
     alignItems: "center",
-    justifyContent: "center", 
-    
+    justifyContent: "center",
+    overflow: "visible", // Ensure bars are fully visible
+    paddingHorizontal: 10, // Adds padding to prevent cutoff
   },
   chart: {
     borderRadius: 16,
+    minWidth: 300, 
+    maxWidth: "95%", 
+    alignSelf: "center",
+    marginRight: 10, // Fix right side cutoff
   },
-
-
   sectionLabel: {
     fontSize: 18,
     fontWeight: "bold",
@@ -92,5 +124,6 @@ export const sellerDashstyles = StyleSheet.create({
   chipText: {
     color: "#FFFFFF",
     fontWeight: "bold",
+    fontSize: 12, 
   },
 });

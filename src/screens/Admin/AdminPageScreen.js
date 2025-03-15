@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Dimensions,Pressable } from 'react-native';
 import { LineChart, PieChart } from 'react-native-chart-kit';
 import { adminStyles } from '../../style/AdministratorStyles/AdminStyles';
 
@@ -15,7 +15,9 @@ const AdminPageScreen = ({ navigation }) => {
         <View style={{ flex: 1, backgroundColor: '#5C5C5C'}}>
             {/* Header Section */}
             <View style={adminStyles.header}>
-                <Image source={require('../../assets/admin-items/logo.png')} style={adminStyles.logo} />
+                <Pressable  onPress={() => navigation.navigate("EditProfileScreen", { avatar: require('../../assets/admin-items/logo.png') })}>
+                    <Image source={require('../../assets/admin-items/logo.png')} style={adminStyles.logo} />
+                </Pressable>
                 <Text style={adminStyles.welcomeText}>Welcome, Admin</Text>
             </View>
 

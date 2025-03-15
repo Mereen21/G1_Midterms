@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { View, ScrollView, Dimensions } from 'react-native';
-import { Button, Text, Card, Chip } from 'react-native-paper';
+import { View, ScrollView, Dimensions, Image,Pressable } from 'react-native';
+import { Button, Text, Card, Chip} from 'react-native-paper';
 import { BarChart } from 'react-native-chart-kit';
 
 import { sellerDashstyles } from '../../style/SellerStyles.js/SellerDashboardStyles';
@@ -64,7 +64,7 @@ const defaultChartConfig = {
   style: { borderRadius: 16 },
 };
 
-const SellerDashboard = () => {
+const SellerDashboard = ({navigation}) => {
   const [filter, setFilter] = React.useState("This Month");
   const [filter2, setFilter2] = React.useState("This Month");
   const [filter3, setFilter3] = React.useState("This Month");
@@ -96,100 +96,126 @@ const SellerDashboard = () => {
 
   return (
     <ScrollView contentContainerStyle={sellerDashstyles.container}>
-      <Text variant="headlineLarge">Welcome, Staff</Text>
+     {/* Delivery Section */}
+      <View style={sellerDashstyles.deliveryContainer}>
+        <View style={sellerDashstyles.deliveryTextContainer}>
+          <Text style={sellerDashstyles.welcomeName}>Hello Staff</Text>
+          <Text style={sellerDashstyles.welcomeTitle}>Let's Get Cooking</Text>
+        </View>
+
+        {/* User Avatar*/}
+        <Pressable onPress={() => navigation.navigate("EditProfileScreen", { avatar: require("../../assets/admin-items/staff.jpg") })}>
+          <Image source={require("../../assets/admin-items/staff.jpg")} style={sellerDashstyles.userAvatar} />
+        </Pressable>
+
+      </View>
     <View style={sellerDashstyles.body}>
-       {/* SALES */}
-       <Card mode="elevated" style={sellerDashstyles.card}>
-        <Card.Content>
-          <View style={sellerDashstyles.filterButtonContainer}>
-            {["This Month", "This Week", "Today"].map((item) => (
-              <Button
-                buttonColor={filter3 === item ? "#2D9C5A" : "#FFFFFF"}
-                textColor={filter3 === item ? "#FFFFFF" : "#2D9C5A"}
-                key={item}
-                mode={filter3 === item ? "contained" : "outlined"}
-                onPress={() => updateChartData3(item)}
-              >
-                {item}
-              </Button>
-            ))}
-          </View>
+    {/* SALES */}
+      <Card mode="elevated" style={sellerDashstyles.card}>
+      <Card.Content>
+        <View style={sellerDashstyles.filterButtonContainer}>
+          {["This Month", "This Week", "Today"].map((item) => (
+            <Button
+              style={sellerDashstyles.button}
+              buttonColor={filter3 === item ? "#2D9C5A" : "#FFFFFF"}
+              textColor={filter3 === item ? "#FFFFFF" : "#2D9C5A"}
+              key={item}
+              mode={filter3 === item ? "contained" : "outlined"}
+              onPress={() => updateChartData3(item)}
+            >
+              {item}
+            </Button>
+          ))}
+        </View>
 
-          <Text style={sellerDashstyles.chartLabel}>
-            Sales Overview ({filter3})
-          </Text>
+        <Text style={sellerDashstyles.chartLabel}>
+          Sales Overview ({filter3})
+        </Text>
 
+        <View style={sellerDashstyles.chartContainer}>
           <BarChart
             data={chartData3}
-            width={screenWidth - 70}
+            width={screenWidth - 100} 
             height={250}
             chartConfig={defaultChartConfig}
             showValuesOnTopOfBars={true}
+            style={sellerDashstyles.chart}
           />
-        </Card.Content>
-      </Card>
+        </View>
+      </Card.Content>
+    </Card>
 
-      {/* ORDERS */}
-      <Card mode="elevated" style={sellerDashstyles.card}>
-        <Card.Content>
-          <View style={sellerDashstyles.filterButtonContainer}>
-            {["This Month", "This Week", "Today"].map((item) => (
-              <Button
-                buttonColor={filter === item ? "#2D9C5A" : "#FFFFFF"}
-                textColor={filter === item ? "#FFFFFF" : "#2D9C5A"}
-                key={item}
-                mode={filter === item ? "contained" : "outlined"}
-                onPress={() => updateChartData(item)}
-              >
-                {item}
-              </Button>
-            ))}
-          </View>
+  {/* ORDERS */}
+    <Card mode="elevated" style={sellerDashstyles.card}>
+      <Card.Content>
+      <View style={sellerDashstyles.filterButtonContainer}>
+      {["This Month", "This Week", "Today"].map((item) => (
+        <Button
+          style={sellerDashstyles.button}
+          buttonColor={filter === item ? "#2D9C5A" : "#FFFFFF"}
+          textColor={filter === item ? "#FFFFFF" : "#2D9C5A"}
+          key={item}
+          mode={filter === item ? "contained" : "outlined"}
+          onPress={() => updateChartData(item)}
+        >
+          {item}
+        </Button>
+      ))}
+    </View>
 
-          <Text style={sellerDashstyles.chartLabel}>
-            Orders Overview ({filter})
-          </Text>
 
+        <Text style={sellerDashstyles.chartLabel}>
+          Orders Overview ({filter})
+        </Text>
+
+        <View style={sellerDashstyles.chartContainer}>
           <BarChart
             data={chartData}
-            width={screenWidth - 80}
+            width={screenWidth - 110}
             height={250}
             chartConfig={defaultChartConfig}
             showValuesOnTopOfBars={true}
+            style={sellerDashstyles.chart}
           />
-        </Card.Content>
-      </Card>
+        </View>
 
-      {/* BOOKINGS */}
-      <Card mode="elevated" style={sellerDashstyles.card}>
-        <Card.Content>
-          <View style={sellerDashstyles.filterButtonContainer}>
-            {["This Month", "This Week", "Today"].map((item) => (
-              <Button
-                buttonColor={filter2 === item ? "#2D9C5A" : "#FFFFFF"}
-                textColor={filter2 === item ? "#FFFFFF" : "#2D9C5A"}
-                key={item}
-                mode={filter2 === item ? "contained" : "outlined"}
-                onPress={() => updateChartData2(item)}
-              >
-                {item}
-              </Button>
-            ))}
-          </View>
+      </Card.Content>
+    </Card>
 
-          <Text style={sellerDashstyles.chartLabel}>
-            Bookings Overview ({filter2})
-          </Text>
+       {/* BOOKINGS */}
+    <Card mode="elevated" style={sellerDashstyles.card}>
+      <Card.Content>
+        <View style={sellerDashstyles.filterButtonContainer}>
+          {["This Month", "This Week", "Today"].map((item) => (
+            <Button
+              style={sellerDashstyles.button}
+              buttonColor={filter2 === item ? "#2D9C5A" : "#FFFFFF"}
+              textColor={filter2 === item ? "#FFFFFF" : "#2D9C5A"}
+              key={item}
+              mode={filter2 === item ? "contained" : "outlined"}
+              onPress={() => updateChartData2(item)}
+            >
+              {item}
+            </Button>
+          ))}
+        </View>
 
+        <Text style={sellerDashstyles.chartLabel}>
+          Bookings Overview ({filter2})
+        </Text>
+
+        <View style={sellerDashstyles.chartContainer}>
           <BarChart
             data={chartData2}
-            width={screenWidth - 80}
+            width={screenWidth - 100} 
             height={250}
             chartConfig={defaultChartConfig}
             showValuesOnTopOfBars={true}
+            style={sellerDashstyles.chart}
           />
-        </Card.Content>
-      </Card>
+        </View>
+      </Card.Content>
+    </Card>
 
 
  {/* Recent Orders  */}
