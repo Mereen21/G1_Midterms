@@ -2,25 +2,21 @@ import { StyleSheet } from 'react-native';
 // import { white } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 export const adminStyles = StyleSheet.create({
-   
+
     container: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#5C5C5C',
+        backgroundColor: 'white',
     },
-    headercontainer:{
+
+    headercontainer: {
         flex: 1,
         alignItems: 'left',
         justifyContent: 'left',
         backgroundColor: '#5C5C5C',
     },
 
-
-    container2: {
-        alignItems: 'center',
-        marginBottom: 20,
-    },
     logo: {
         width: 50,
         height: 50,
@@ -36,11 +32,11 @@ export const adminStyles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        margin:20,
-        
+        margin: 20,
+
     },
 
-   
+
     welcomeText: {
         fontSize: 25,
         fontWeight: 'bold',
@@ -52,8 +48,8 @@ export const adminStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 20,
-        marginStart:20,
-        marginEnd:20,
+        marginStart: 20,
+        marginEnd: 20,
     },
 
     overviewBox: {
@@ -64,7 +60,6 @@ export const adminStyles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1,
         borderColor: 'black',
-        
         borderRadius: 20,
     },
     box: {
@@ -94,7 +89,7 @@ export const adminStyles = StyleSheet.create({
         borderBottomRightRadius: 20,
         marginBottom: 10,
     },
-    
+
     topBoxText: {
         color: '#fff',
         fontSize: 18,
@@ -127,7 +122,7 @@ export const adminStyles = StyleSheet.create({
         height: 30, // height of the image
     },
     textBox: {
-        
+
         paddingVertical: 4,
         paddingHorizontal: 8,
         borderRadius: 8,
