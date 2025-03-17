@@ -35,8 +35,8 @@ const RegisterScreen = ({ navigation }) => {
     setUsername(text);
     if (text === "") {
       setUsernameError("");
-    } else if (text.length < 4) {
-      setUsernameError("Name must be at least 4 characters.");
+    } else if (text.length < 3) {
+      setUsernameError("Username must be at least 3 characters.");
     } else {
       setUsernameError("");
     }
@@ -59,7 +59,7 @@ const RegisterScreen = ({ navigation }) => {
     if (text === "") {
       setPasswordError("");
     } else if (text.length < 6) {
-      setPasswordError("Must be at least 6 characters.");
+      setPasswordError("Password must be at least 6 characters.");
     } else {
       setPasswordError("");
     }
@@ -69,19 +69,18 @@ const RegisterScreen = ({ navigation }) => {
     setConfirmPassword(text);
     if (text === "") {
       setConfirmPasswordError("");
-    } else if (text !== password) {
-      setConfirmPasswordError("Passwords do not match.");
     } else {
       setConfirmPasswordError("");
     }
+
   };
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleContinue = () => {
-    if (isSubmitting) return; 
+    if (isSubmitting) return;
 
-    setIsSubmitting(true); 
+    setIsSubmitting(true);
     let isValid = true;
 
     let newUsernameError = "";
@@ -92,8 +91,8 @@ const RegisterScreen = ({ navigation }) => {
     if (username === "") {
       newUsernameError = "This field is required.";
       isValid = false;
-    } else if (username.length < 4) {
-      newUsernameError = "Name must be at least 4 characters.";
+    } else if (username.length < 3) {
+      newUsernameError = "Username must be at least 3 characters.";
       isValid = false;
     }
 
@@ -110,12 +109,15 @@ const RegisterScreen = ({ navigation }) => {
       newPasswordError = "This field is required.";
       isValid = false;
     } else if (password.length < 6) {
-      newPasswordError = "Must be at least 6 characters.";
+      newPasswordError = "Password must be at least 6 characters.";
       isValid = false;
     }
 
     if (confirmPassword === "") {
       newConfirmPasswordError = "This field is required.";
+      isValid = false;
+    } else if (password.length < 6) {
+      newConfirmPasswordError = "Password must be at least 6 characters."; // Added this line
       isValid = false;
     } else if (confirmPassword !== password) {
       newConfirmPasswordError = "Passwords do not match.";
@@ -203,7 +205,7 @@ const RegisterScreen = ({ navigation }) => {
                 value={confirmPassword}
                 style={[mainStyle.textInput, confirmPasswordError ? mainStyle.inputError : null]}
                 onChangeText={validateConfirmPassword}
-                secureTextEntry={true} 
+                secureTextEntry={true}
               />
               {confirmPasswordError ? <Text style={mainStyle.errorText}>{confirmPasswordError}</Text> : null}
             </View>
@@ -218,9 +220,9 @@ const RegisterScreen = ({ navigation }) => {
                 {isSubmitting ? "Registering..." : "Register"}
               </Text>
             </TouchableOpacity>
-    
+
             <TouchableOpacity disabled={true}>
-            <Text style={mainStyle.signInText}>Already have an account? </Text>
+              <Text style={mainStyle.signInText}>Already have an account? </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
               <Text style={[mainStyle.signInText, { textDecorationLine: 'underline' }]}>Sign in Here</Text>
