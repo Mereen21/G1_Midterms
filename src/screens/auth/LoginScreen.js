@@ -9,12 +9,10 @@ import {
 } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 import { mainStyle } from '../../style/MainStyles';
-import api from '../../../api';
 
 const LoginScreen = ({ navigation }) => {
-  // fakestore api creds
-  const [username, setUsername] = useState('jimmie_k');
-  const [password, setPassword] = useState('klein*#%*');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [errorField, setErrorField] = useState('');  
@@ -23,14 +21,6 @@ const LoginScreen = ({ navigation }) => {
 
   const handleInputChange = (text, field) => {
     if (field === 'username') {
-      setUsername(text);
-      if (text.length < 3) {
-        setUsernameError('Username must be at least 3 characters');
-        setErrorField('username');
-      } else {
-        setUsernameError('');
-        setErrorField('');
-      }
     } else if (field === 'password') {
       setPassword(text);
       if (text.length < 6) {
@@ -43,41 +33,32 @@ const LoginScreen = ({ navigation }) => {
     }
   };
 
-  const login = async () => {
-    try {
-      if (!username.trim() || !password.trim()) {
-        setSnackbarMessage('Username and password are required.');
-        setSnackbarVisible(true);
-        return;
-      }
-
-      //DEMO CREDENTIALS
-      if (username === 'johnd' && password === 'm38rmF$') {
-        setSnackbarMessage('Admin Login Successful');
-        setSnackbarVisible(true);
-        setTimeout(() => navigation.navigate('AdminPageScreen'), 1000);
-        return;
-      }
-      if (username === 'mor_2314' && password === '83r5^_') {
-        setSnackbarMessage('Seller Login Successful');
-        setSnackbarVisible(true);
-        setTimeout(() => navigation.navigate('SellerDashboard'), 1000);
-        return;
-      }
-
-      const response = await api.post('/auth/login', { username, password });
-      console.log('Response', response.data);
-      navigation.navigate('UserLandingPage');
-    } catch (error) {
-      console.error('Login Error', error.response?.data || error.message);
-      setUsernameError('Invalid username or password');
-      setPasswordError('');
-      setErrorField('username');
-      setSnackbarMessage('Invalid login credentials');
+  const login = () => {
+    if (!username.trim() || !password.trim()) {
+      setSnackbarMessage('Username and password are required.');
       setSnackbarVisible(true);
+      return;
     }
-  };
 
+    if (username === 'admin' && password === 'admin123') {
+      setSnackbarMessage('Admin Login Successful');
+      setSnackbarVisible(true);
+      setTimeout(() => navigation.navigate('AdminPageScreen'), 1000);
+      return;
+    }
+    if (username === 'seller' && password === 'seller123') {
+      setSnackbarMessage('Seller Login Successful');
+      setSnackbarVisible(true);
+      setTimeout(() => navigation.navigate('SellerNav'), 1000);
+      return;
+    }
+
+    setUsernameError('Invalid username or password');
+    setPasswordError('');
+    setErrorField('username');
+    setSnackbarMessage('Invalid login credentials');
+    setSnackbarVisible(true);
+  };
 
   return (
     <ImageBackground
@@ -93,14 +74,6 @@ const LoginScreen = ({ navigation }) => {
 
         <View style={mainStyle.card}>
           <ScrollView showsVerticalScrollIndicator={false}>
-             
-               {/* DEMO CREDENTIALS */}
-            <View style={mainStyle.demoContainer}>
-              <Text style={mainStyle.demoTitle}>Demo Accounts:</Text>
-              <Text style={mainStyle.demoText}>👤 Admin: johnd | 🔑 m38rmF$</Text>
-              <Text style={mainStyle.demoText}>👤 Seller: mor_2314 | 🔑 83r5^_</Text>
-            </View>
-
             {/* Username Input */}
             <View style={mainStyle.inputGroup}>
               <Text style={mainStyle.label}>Username</Text>
@@ -136,9 +109,8 @@ const LoginScreen = ({ navigation }) => {
               <Text style={mainStyle.buttonText}>Login</Text>
             </TouchableOpacity>
 
-           
             <TouchableOpacity disabled={true}>
-            <Text style={mainStyle.signInText}>Don't have an account? </Text>
+              <Text style={mainStyle.signInText}>Don't have an account? </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
               <Text style={[mainStyle.signInText, { textDecorationLine: 'underline' }]}>Sign Up Here</Text>
@@ -147,18 +119,14 @@ const LoginScreen = ({ navigation }) => {
         </View>
       </View>
 
-
-
-            {/* Snackbar Notification */}
-            <Snackbar
-              visible={snackbarVisible}
-              onDismiss={() => setSnackbarVisible(false)}
-              duration={3000}
-            >
-              {snackbarMessage}
-            </Snackbar>
-     
- 
+      {/* Snackbar Notification */}
+      <Snackbar
+        visible={snackbarVisible}
+        onDismiss={() => setSnackbarVisible(false)}
+        duration={3000}
+      >
+        {snackbarMessage}
+      </Snackbar>
     </ImageBackground>
   );
 };
