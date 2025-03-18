@@ -10,6 +10,8 @@ const SellerNav = () => {
   const [index, setIndex] = React.useState(0);
   const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 
+
+  //Routes and icons for navbar
   const [routes] = React.useState([
     { key: 'dashboard', title: 'Home', icon: 'home' },
     { key: 'orders', title: 'Orders', icon: 'clipboard-text', disabled: true }, 
@@ -19,6 +21,7 @@ const SellerNav = () => {
     { key: 'profile', title: 'Profile', icon: 'account' },
   ]);
 
+  //Declare Screens Here
   const renderScene = BottomNavigation.SceneMap({
     dashboard: SellerDashboard,
     inventory: SellerInventory,
@@ -29,9 +32,9 @@ const SellerNav = () => {
     const selectedRoute = routes[newIndex];
 
     if (selectedRoute.disabled) {
-      setSnackbarVisible(true); // Show snackbar if the route is disabled
+      setSnackbarVisible(true); 
     } else {
-      setIndex(newIndex); // Only change index if route is enabled
+      setIndex(newIndex); 
     }
   };
 
@@ -50,6 +53,7 @@ const SellerNav = () => {
         )}
       />
 
+  {/* Snackbar to Alert Features for show */}
       <Snackbar
         visible={snackbarVisible}
         onDismiss={() => setSnackbarVisible(false)}
