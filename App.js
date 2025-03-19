@@ -14,6 +14,7 @@ import AdminPageScreen from './src/screens/Admin/AdminPageScreen';
 import EditProfileScreen from './src/screens/seller/EditProfile';
 import UserEditProfileScreen from './src/screens/User/UserEditProfileScreen';
 import UserAccountManagementScreen from './src/screens/Admin/UserAccountManagementScreen';
+import AdminNav from './src/screens/Admin/AdminNav';
 import SellerNav from './src/screens/seller/SellerNav';
 import SellerInventory from './src/screens/seller/SellerInventory';
 
@@ -37,6 +38,7 @@ const App = () => {
               <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
               <Stack.Screen name="UserEditProfileScreen" component={UserEditProfileScreen} />
               <Stack.Screen name="UserAccountManagementScreen" component={UserAccountManagementScreen} />
+              <Stack.Screen name="AdminNav" component={AdminNav} />
               <Stack.Screen name="SellerNav" component={SellerNav} />
               <Stack.Screen name="SellerInventoryPage" component={SellerInventory} />
             </Stack.Navigator>

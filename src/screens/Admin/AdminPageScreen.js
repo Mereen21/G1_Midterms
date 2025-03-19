@@ -5,11 +5,8 @@ import { adminStyles } from '../../style/AdministratorStyles/AdminStyles';
 
 const screenWidth = Dimensions.get('window').width;
 
-const AdminPageScreen = ({ navigation }) => {
-    const handleBoxPress = (screenName) => {
-        console.log(`${screenName} pressed`);
-        navigation.navigate(screenName);
-    };
+const AdminPageScreen = () => {
+   
 
     return (
         <View style={{ flex: 1, backgroundColor: '#5C5C5C' }}>
@@ -89,8 +86,8 @@ const AdminPageScreen = ({ navigation }) => {
 
                 </View>
             </View>
-            <View style={[adminStyles.container]}>
-                {/* Bottom Navigation */}
+            {/* <View style={[adminStyles.container]}>
+                
                 <View style={adminStyles.bottomNav}>
                     <TouchableOpacity style={adminStyles.navBox} onPress={() => handleBoxPress('MenuManagementScreen')}>
                         <Image source={require('../../assets/admin-items/white-home.png')} style={adminStyles.navIcon} />
@@ -116,7 +113,7 @@ const AdminPageScreen = ({ navigation }) => {
                         <Text style={adminStyles.navText}>User</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </View> */}
         </View>
     );
 };

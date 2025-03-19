@@ -1,88 +1,122 @@
-import React from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
-import { View, Text, Image, TouchableOpacity, Dimensions, Pressable } from 'react-native';
-import { LineChart, PieChart } from 'react-native-chart-kit';
-import { adminStyles } from '../../style/AdministratorStyles/AdminStyles';
+import * as React from 'react';
+import { View, ScrollView, TextInput, Alert, TouchableOpacity } from 'react-native';
+import { Card, Button, Menu, Text } from 'react-native-paper';
 import { usermanageStyles } from '../../style/AdministratorStyles/UserManageStyles';
 
-
-const screenWidth = Dimensions.get('window').width;
-
-const AdminPageScreen = ({ navigation }) => {
-    const handleBoxPress = (screenName) => {
-        console.log(`${screenName} pressed`);
-        navigation.navigate(screenName);
-    };
-
-    return (
-        <View style={{ flex: 1, backgroundColor: '#5C5C5C' }}>
-            <View style={usermanageStyles.header}>
-                <View style={usermanageStyles.leftContainer}>
-                    {/* <Pressable onPress={() => navigation.navigate("EditProfileScreen")}>
-                        <Image source={require('../../assets/admin-items/logo.png')} style={usermanageStyles.logo} />
-                    </Pressable> */}
-                    <Text style={usermanageStyles.welcomeText}>User List</Text>
-                </View>
-
-                {/* Right section: New User Box */}
-                <TouchableOpacity style={usermanageStyles.newuserBox}>
-                    <Text style={usermanageStyles.newusertxt}>+ ADD USER</Text>
-                </TouchableOpacity>
-            </View>
-
-            <SafeAreaView style={{ flex: 'auto' }}>
-                <ScrollView contentContainerStyle={{ flexGrow: 1, }}>
-                    <View style={usermanageStyles.maincontainer}>
-                        <Text style={usermanageStyles.desc}>Customers</Text>
-                        <View style={usermanageStyles.listcontainer1}>
-
-                            <View style={usermanageStyles.customerbox}>
-
-                            </View>
-                        </View>
-
-                        <Text style={usermanageStyles.desc}>Employees</Text>
-                        <View style={usermanageStyles.listcontainer2}>
-
-                            <View style={usermanageStyles.customerbox}>
-
-                            </View>
-                        </View>
-                    </View>
-                </ScrollView>
-            </SafeAreaView>
-
-            <View style={[adminStyles.container]}>
-                {/* Bottom Navigation */}
-                <View style={adminStyles.bottomNav}>
-                    <TouchableOpacity style={adminStyles.navBox} onPress={() => handleBoxPress('AdminPageScreen')}>
-                        <Image source={require('../../assets/admin-items/white-home.png')} style={adminStyles.navIcon} />
-                        <Text style={adminStyles.navText}>Home</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={adminStyles.navBox} onPress={() => handleBoxPress('MenuManagementScreen')}>
-                        <Image source={require('../../assets/admin-items/menumanagementicon.png')} style={adminStyles.navIcon} />
-                        <Text style={adminStyles.navText}>Menu</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={adminStyles.navBox} onPress={() => handleBoxPress('ContentManagementScreen')}>
-                        <Image source={require('../../assets/admin-items/contenticon.png')} style={adminStyles.navIcon} />
-                        <Text style={adminStyles.navText}>Content</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={adminStyles.navBox} onPress={() => handleBoxPress('UserAnalyticsScreen')}>
-                        <Image source={require('../../assets/admin-items/analytics.png')} style={adminStyles.navIcon} />
-                        <Text style={adminStyles.navText}>Analytics</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={adminStyles.navBox}
-                        onPress={() => handleBoxPress('UserAccountManagementScreen')}
-                    >
-                        <Image source={require('../../assets/admin-items/userselect.png')} style={adminStyles.navIcon} />
-                        <Text style={adminStyles.navText}>User</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </View>
-    );
+//dagdag ng edit feature
+const userData = {
+  customers: [
+    { key: 1, name: 'John Doe', email: 'john.doe@example.com', status: 'Active' },
+    { key: 2, name: 'Jane Smith', email: 'jane.smith@example.com', status: 'Inactive' },
+    { key: 3, name: 'Michael Johnson', email: 'michael.johnson@example.com', status: 'Active' },
+  ],
+  employees: [
+    { key: 4, name: 'Alice Brown', email: 'alice.brown@example.com', role: 'Manager', status: 'Active' },
+    { key: 5, name: 'Robert Wilson', email: 'robert.wilson@example.com', role: 'Chef', status: 'Active' },
+    { key: 6, name: 'Emily Davis', email: 'emily.davis@example.com', role: 'Cashier', status: 'Inactive' },
+  ],
 };
 
-export default AdminPageScreen;
+const UserAccountManagementScreen = () => {
+  const [visible, setVisible] = React.useState(false);
+  const [selectedCategory, setSelectedCategory] = React.useState('all');
+  const [searchQuery, setSearchQuery] = React.useState('');
 
+  const openMenu = () => setVisible(true);
+  const closeMenu = () => setVisible(false);
+
+  const getUsers = () => {
+    if (selectedCategory === 'all') {
+      return [...userData.customers, ...userData.employees];
+    }
+    return userData[selectedCategory] || [];
+  };
+
+  const filteredUsers = getUsers().filter(user =>
+    user.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleDelete = (user) => {
+    Alert.alert(
+      "Confirm Deletion",
+      `Are you sure you want to delete ${user.name}?`,
+      [
+        { text: "Cancel", style: "cancel" },
+        { text: "Delete", onPress: () => console.log("Deleted", user), style: "destructive" }
+      ]
+    );
+  };
+
+  return (
+    <View style={usermanageStyles.maincontainer}>
+      <Text style={usermanageStyles.categoryTitle}>
+        USER MANAGEMENT   
+      </Text>
+
+      {/* Search Bar and Suggested Box in a Row */}
+      <View style={usermanageStyles.searchRow}>
+        <View style={usermanageStyles.searchContainer}>
+          <TextInput
+            style={usermanageStyles.searchInput}
+            placeholder="Search users..."
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
+        </View>
+
+        <TouchableOpacity style={usermanageStyles.newuserBox} onPress={() => console.log("Suggestion Clicked")}>
+          <Text style={usermanageStyles.newusertext}>+ Add</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Category Selector */}
+      <View style={usermanageStyles.categoryContainer}>
+        <Menu
+          visible={visible}
+          onDismiss={closeMenu}
+          anchor={
+            <Button mode="outlined" onPress={openMenu} style={usermanageStyles.categoryButton}>
+              <Text>
+                {selectedCategory === 'all' ? "Select Category" : selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)}
+              </Text>
+            </Button>
+          }
+        >
+          <Menu.Item onPress={() => { setSelectedCategory('all'); closeMenu(); }} title="All Users" />
+          <Menu.Item onPress={() => { setSelectedCategory('customers'); closeMenu(); }} title="Customers" />
+          <Menu.Item onPress={() => { setSelectedCategory('employees'); closeMenu(); }} title="Employees" />
+        </Menu>
+      </View>
+
+      {/* User List */}
+      <ScrollView>
+        {filteredUsers.length > 0 ? (
+          filteredUsers.map((user) => (
+            <Card key={user.key} style={usermanageStyles.card}>
+              <Card.Content>
+                <Text style={usermanageStyles.cardTitle}>{user.name}</Text>
+                <Text style={usermanageStyles.cardContent}>{user.email}</Text>
+                {user.role && <Text style={usermanageStyles.cardContent}>Role: {user.role}</Text>}
+                <Text
+                  style={[
+                    usermanageStyles.cardStatus,
+                    { color: user.status === 'Active' ? 'green' : 'red' } // Dynamic color
+                  ]}
+                >
+                  {user.status}
+                </Text>
+              </Card.Content>
+              <Card.Actions>
+                <Button mode="contained" style={usermanageStyles.deleteButton} onPress={() => handleDelete(user)}>Delete</Button>
+              </Card.Actions>
+            </Card>
+          ))
+        ) : (
+          <Text style={usermanageStyles.noUsersText}>No users found.</Text>
+        )}
+      </ScrollView>
+    </View>
+  );
+};
+
+export default UserAccountManagementScreen;
