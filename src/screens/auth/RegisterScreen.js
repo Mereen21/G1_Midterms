@@ -156,7 +156,7 @@ const RegisterScreen = ({ navigation }) => {
           </Text>
         </View>
 
-        {/* login Card */}
+        {/* Register Card */}
         <View style={mainStyle.card}>
           <ScrollView showsVerticalScrollIndicator={false}>
             {/* Username Input */}
