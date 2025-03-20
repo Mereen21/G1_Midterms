@@ -27,19 +27,19 @@ export const usermanageStyles = {
     searchInput: {
       color: 'white',
       borderWidth: 1,
-      borderColor: '#ddd',
+      borderColor: '#FFFFFF',
       borderRadius: 5,
       padding: 10,
       fontSize: 16,
     },
     newuserBox: {
       flex: 1, // Smaller width than search
-      backgroundColor: '#FFA500',
+      backgroundColor: '#ff9800',
       paddingVertical: 10,
       paddingHorizontal: 15,
       borderRadius: 8,
       borderWidth: 1,
-      borderColor: '#FFA500',
+      borderColor: '#ff9800',
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -67,22 +67,74 @@ export const usermanageStyles = {
     cardTitle: {
       fontSize: 18,
       fontWeight: 'bold',
+      color: 'white',
     },
     cardContent: {
       fontSize: 14,
+      color: 'white',
     },
     cardStatus: {
       fontSize: 14,
       fontWeight: 'bold',
     },
+    editButton: {
+      backgroundColor: '#ff9800',
+    },
     deleteButton: {
-      backgroundColor: '#d9534f',
+      backgroundColor: '#d32f2f',
     },
     noUsersText: {
       textAlign: 'center',
       color: 'red',
       fontSize: 16,
       marginTop: 10,
+    },
+
+    //Modal
+
+    modalContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+    },
+    modalContent: {
+      width: '80%',
+      padding: 20,
+      backgroundColor: '#222',
+      borderRadius: 10,
+      alignItems: 'center',
+    },
+    modalTitle: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      marginBottom: 10,
+      color: 'white',
+    },
+    closeButton: {
+      backgroundColor: 'red',
+      paddingVertical: 12,
+      borderRadius: 8,
+      alignItems: 'center',
+      marginTop: 10,
+      width: '90%',
+      alignSelf: 'center',
+    },
+
+    label: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      marginBottom: 6,
+      color: 'white',
+    },
+    textInput: {
+      borderRadius: 8,
+      fontSize: 16,
+      padding: 12,
+      backgroundColor: '#2C2C2C',
+      width: '100%',
+      borderWidth: 1,
+      color:'white',
     },
   };
   

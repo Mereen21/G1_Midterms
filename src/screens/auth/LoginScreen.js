@@ -58,9 +58,9 @@ const LoginScreen = ({navigation}) => {
           setSnackbarVisible(true);
           setTimeout(() => {
             setLoading(false);
-            if (username === 'admin') navigation.navigate('AdminPageScreen');
+            if (username === 'admin') navigation.navigate('AdminNav');
             if (username === 'seller') navigation.navigate('SellerNav');
-            if (username === 'user') navigation.navigate('UserLandingPage');
+            if (username === 'user') navigation.navigate('UserNavBar');
           }, 500);
           return;
         } else {

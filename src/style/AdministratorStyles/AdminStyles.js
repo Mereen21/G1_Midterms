@@ -52,8 +52,8 @@ export const adminStyles = StyleSheet.create({
     },
 
     overviewBox: {
-        width: '48%',
-        height: 200,
+        width: '100%',
+        height: 250,
         backgroundColor: '#2E2E2E',
         justifyContent: 'center',
         alignItems: 'center',
