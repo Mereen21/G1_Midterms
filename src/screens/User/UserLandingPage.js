@@ -7,19 +7,15 @@ import {
   FlatList,
   TouchableOpacity,
   ImageBackground,
+  ScrollView,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-// react native paper imports
-import {SegmentedButtons} from 'react-native-paper';
-
 import styles from '../../style/UserStyles/UserLandingPageStyle';
 
-// images
 import featuredbg from '../../assets/user-items/featuredbg.jpg';
 import avatar from '../../assets/user-items/avatar.jpg';
 
-// food tray items
 const foodTrays = [
   {
     id: '1',
@@ -59,64 +55,72 @@ const foodTrays = [
   },
 ];
 
+const serviceSections = [
+  {id: '1', title: 'Food Ordering', screen: 'FoodOrderingScreen'},
+  {id: '2', title: 'Catering Services', screen: 'CateringServicesScreen'},
+  {id: '3', title: 'Frozen Products', screen: 'FrozenProductsScreen'},
+];
+
 const UserLandingPage = () => {
   const navigation = useNavigation();
   const [numColumns, setNumColumns] = useState(3);
-  const [option, setOption] = useState('');
 
   return (
-    <View style={styles.container}>
-      {/* Delivery Section */}
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{paddingBottom: 20}}>
+      {/* Greeting & Avatar */}
       <View style={styles.deliveryContainer}>
         <View style={styles.deliveryTextContainer}>
-          <Text style={styles.welcomeName}>Hello John</Text>
-          <Text style={styles.welcomeTitle}>Hungry Now?</Text>
+          <Text style={styles.welcomeName}>Welcome, John</Text>
+          <Text style={styles.welcomeTitle}>Craving Something Delicious?</Text>
         </View>
-
-        {/* User Avatar */}
         <TouchableOpacity
           onPress={() => navigation.navigate('UserEditProfileScreen')}>
           <Image source={avatar} style={styles.userAvatar} />
         </TouchableOpacity>
       </View>
 
-      {/* <View style={styles.sectionButtonContainer}>
-        <View style={styles.segmentedButtonWrapper}>
-          <SegmentedButtons
-            value={option}
-            onValueChange={setOption}
-            buttons={[
-              {
-                value: 'foodOrder',
-                label: 'Food Trays',
-              },
-              {
-                value: 'cateringServices',
-                label: 'Catering Services',
-              },
-            ]}
-          />
-        </View>
-      </View> */}
+      <TextInput placeholder="Search for food..." style={styles.searchBar} />
 
-      <TextInput placeholder="Search" style={styles.searchBar} />
-
+      {/* Featured Item Section */}
       <View style={styles.featuredItem}>
         <ImageBackground source={featuredbg} style={styles.featuredImage}>
           <View style={styles.gradientOverlay} />
-
           <TouchableOpacity style={styles.featuredButton}>
             <Text style={styles.featuredButtonText}>Order Now</Text>
           </TouchableOpacity>
         </ImageBackground>
       </View>
 
-      <Text style={styles.sectionTitle}>Our Food Trays</Text>
+      {/* Service Sections */}
+      <Text style={[styles.sectionTitle, {marginBottom: 20}]}>
+        Our Services
+      </Text>
+      <FlatList
+        data={serviceSections}
+        numColumns={3}
+        keyExtractor={item => item.id}
+        contentContainerStyle={{paddingBottom: 20}}
+        renderItem={({item}) => (
+          <TouchableOpacity
+            style={styles.serviceCard}
+            onPress={() => navigation.navigate(item.screen)}>
+            <Text style={styles.serviceText}>{item.title}</Text>
+          </TouchableOpacity>
+        )}
+      />
+
+      {/* Food Trays */}
+      <Text style={[styles.sectionTitle, {marginBottom: 20}]}>
+        Explore Our Food Trays
+      </Text>
       <FlatList
         data={foodTrays}
         numColumns={numColumns}
         key={numColumns.toString()}
         keyExtractor={item => item.id}
+        contentContainerStyle={{paddingBottom: 20}}
         renderItem={({item}) => (
           <View style={styles.foodCard}>
             <Image source={{uri: item.image}} style={styles.foodImage} />
@@ -124,7 +128,7 @@ const UserLandingPage = () => {
           </View>
         )}
       />
-    </View>
+    </ScrollView>
   );
 };
 

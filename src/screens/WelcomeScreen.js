@@ -1,39 +1,39 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, Alert, ImageBackground } from 'react-native';
-import { welcomestyle } from '../style/WelcomeScreenStyle';
+import {Text, View, TouchableOpacity} from 'react-native';
+import Video from 'react-native-video';
+import {welcomestyle} from '../style/WelcomeScreenStyle';
 
-
-const WelcomeScreen = ({ navigation }) => {
+const WelcomeScreen = ({navigation}) => {
   return (
-    <ImageBackground 
-      source={require('../assets/landingbg.jpg')} 
-      style={welcomestyle.container}
-      resizeMode="cover"
-    >
-      {/* Title Section */}
-      <View style={welcomestyle.titleContainer}>
-        <Text style={welcomestyle.titleText2}>VLSQZ</Text>
-        <Text style={welcomestyle.subtext}>Catering Services</Text>
-      </View>
+    <View style={welcomestyle.container}>
+      {/* Video Background */}
+      <Video
+        source={require('../assets/landingvideo.mp4')}
+        style={welcomestyle.backgroundVideo}
+        resizeMode="cover"
+        repeat
+        muted
+        playWhenInactive
+      />
 
-      {/* login button */}
-      {/* <TouchableOpacity
-        style={welcomestyle.buttonLogin}
-        onPress={() => navigation.navigate('LoginScreen')}
-      >
-        <Text style={welcomestyle.buttonTextLogin}>Login</Text>
-      </TouchableOpacity> */}
+      {/* Overlay Content */}
+      <View style={welcomestyle.overlay}>
+        {/* Title Section */}
+        <View style={welcomestyle.titleContainer}>
+          <Text style={welcomestyle.titleText2}>VLSQZ</Text>
+          <Text style={welcomestyle.subtext}>Catering Services</Text>
+        </View>
 
-      {/* Get Started */}
-      <View style={welcomestyle.buttonContainer}>
-        <TouchableOpacity
-          style={welcomestyle.button}
-          onPress={() => navigation.navigate('LoginScreen')}
-        >
-          <Text style={welcomestyle.buttonText}>Get Started</Text>
-        </TouchableOpacity>
+        {/* Get Started */}
+        <View style={welcomestyle.buttonContainer}>
+          <TouchableOpacity
+            style={welcomestyle.button}
+            onPress={() => navigation.navigate('LoginScreen')}>
+            <Text style={welcomestyle.buttonText}>Get Started</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </ImageBackground>
+    </View>
   );
 };
 

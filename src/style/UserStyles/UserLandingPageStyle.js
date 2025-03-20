@@ -6,7 +6,7 @@ export default StyleSheet.create({
     backgroundColor: '#f2f6fe',
     padding: 15,
   },
-  
+
   searchBar: {
     backgroundColor: '#f0f0f0',
     padding: 10,
@@ -77,9 +77,10 @@ export default StyleSheet.create({
     fontWeight: 'bold',
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 12,
+    // paddingTop: 6,
   },
   foodCard: {
     // backgroundColor: '#f1f1f1',
@@ -133,10 +134,26 @@ export default StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: '100%', 
+    height: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    borderBottomLeftRadius: 10, 
-    borderBottomRightRadius: 10, 
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
-  
+
+  serviceCard: {
+    flex: 1,
+    backgroundColor: '#f26140',
+    paddingVertical: 15,
+    margin: 5,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 3,
+  },
+  serviceText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 14,
+  },
 });
