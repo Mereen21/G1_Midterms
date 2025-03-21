@@ -3,6 +3,7 @@ import {View} from 'react-native';
 import {BottomNavigation, Snackbar} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // Correct icon set
 import UserLandingPage from './UserLandingPage';
+import UserEditProfileScreen from './UserEditProfileScreen';
 
 const UserNavBar = () => {
   const [index, setIndex] = React.useState(0);
@@ -17,14 +18,14 @@ const UserNavBar = () => {
       disabled: true,
     },
     {key: 'bookings', title: 'Bookings', icon: 'calendar', disabled: true},
-    {key: 'inventory', title: 'Account', icon: 'archive'},
+    {key: 'account', title: 'Account', icon: 'archive'},
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
     dashboard: UserLandingPage,
     orders: () => <View />,
     bookings: () => <View />,
-    inventory: () => <View />,
+    account:UserEditProfileScreen,
   });
 
   const handleIndexChange = newIndex => {

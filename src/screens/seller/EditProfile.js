@@ -107,17 +107,7 @@ const EditProfileScreen = ({ route }) => {
     setLogoutModalVisible(false); 
   
     // Reset nav
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [
-          {
-            name: 'LoginScreen',
-            params: { loggedOut: true }, 
-          },
-        ],
-      })
-    );
+    navigation.navigate('LoginScreen', { loggedOut: true });
   };
 
   return (

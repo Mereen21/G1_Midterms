@@ -23,25 +23,6 @@ const LoginScreen = ({navigation,route}) => {
   const [loading, setLoading] = useState(false);
 
 
-  useEffect(() => {
-    const backAction = () => {
-      if (route.params?.loggedOut) {
-       
-        BackHandler.exitApp(); 
-        return true; 
-      }
-      return false; 
-    };
-
-    
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction
-    );
-
-    return () => backHandler.remove();
-  }, [route.params]);
-
   const handleInputChange = (text, field) => {
     if (field === 'username') {
       setUsername(text);
