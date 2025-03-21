@@ -88,7 +88,7 @@ const UserLandingPage = () => {
         <ImageBackground source={featuredbg} style={styles.featuredImage}>
           <View style={styles.gradientOverlay} />
           <TouchableOpacity style={styles.featuredButton}>
-            <Text style={styles.featuredButtonText}>Order Now</Text>
+            <Text style={styles.featuredButtonText}>Browse Menu</Text>
           </TouchableOpacity>
         </ImageBackground>
       </View>

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {View} from 'react-native';
 import {BottomNavigation, Snackbar} from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // Correct icon set
 import UserLandingPage from './UserLandingPage';
 
 const UserNavBar = () => {
@@ -10,31 +10,25 @@ const UserNavBar = () => {
 
   const [routes] = React.useState([
     {key: 'dashboard', title: 'Home', icon: 'home'},
-    {key: 'orders', title: 'Orders', icon: 'clipboard-text', disabled: true},
-    {key: 'bookings', title: 'Bookings', icon: 'calendar', disabled: true},
-    {key: 'inventory', title: 'Inventory', icon: 'archive'},
     {
-      key: 'customerdatabase',
-      title: 'Customers',
-      icon: 'account-search',
+      key: 'orders',
+      title: 'Order History',
+      icon: 'clipboard-text',
       disabled: true,
     },
-    {key: 'profile', title: 'Profile', icon: 'account'},
+    {key: 'bookings', title: 'Bookings', icon: 'calendar', disabled: true},
+    {key: 'inventory', title: 'Account', icon: 'archive'},
   ]);
 
-  // Corrected Scene Mapping
-  const renderScene = ({route}) => {
-    switch (route.key) {
-      case 'dashboard':
-        return <UserLandingPage />;
-      default:
-        return <View />;
-    }
-  };
+  const renderScene = BottomNavigation.SceneMap({
+    dashboard: UserLandingPage,
+    orders: () => <View />,
+    bookings: () => <View />,
+    inventory: () => <View />,
+  });
 
   const handleIndexChange = newIndex => {
     const selectedRoute = routes[newIndex];
-
     if (selectedRoute.disabled) {
       setSnackbarVisible(true);
     } else {
@@ -48,6 +42,13 @@ const UserNavBar = () => {
         navigationState={{index, routes}}
         onIndexChange={handleIndexChange}
         renderScene={renderScene}
+        renderIcon={({route, focused}) => (
+          <Icon
+            name={route.icon}
+            size={24}
+            color={focused ? '#2D9C5A' : '#B0B0B0'}
+          />
+        )}
       />
 
       <Snackbar
