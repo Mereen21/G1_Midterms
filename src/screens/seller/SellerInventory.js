@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { View, StyleSheet, ScrollView, TextInput, Modal, Alert , ToastAndroid} from 'react-native';
+import { View, ScrollView, TextInput, Modal, Alert , ToastAndroid} from 'react-native';
 import { Card, Button, Menu, FAB, Text,Snackbar, Chip } from 'react-native-paper';
-
+import { sellerInv } from '../../style/SellerStyles.js/SellerInventoryStyles';
 const inventoryData = {
   orders: [
     { key: 1, name: 'Food Tray', quantity: 50,status: 'In-Stock' },
@@ -109,8 +109,8 @@ const InventoryScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.categoryTitle}>{selectedCategory.toUpperCase()} INVENTORY</Text>
+    <View style={sellerInv.container}>
+      <Text style={sellerInv.categoryTitle}>{selectedCategory.toUpperCase()} INVENTORY</Text>
       
       <Menu
         visible={visible}
@@ -123,7 +123,7 @@ const InventoryScreen = () => {
       </Menu>
 
       <TextInput
-        style={styles.searchInput}
+        style={sellerInv.searchInput}
         placeholder="Search items..."
         value={searchQuery}
         onChangeText={setSearchQuery}
@@ -131,9 +131,9 @@ const InventoryScreen = () => {
 
       <ScrollView>
         {items.map((item) => (
-          <Card key={item.key} style={styles.card}>
+          <Card key={item.key} style={sellerInv.card}>
             <Card.Content>
-              <Text style={styles.cardTitle}>{item.name}</Text>
+              <Text style={sellerInv.cardTitle}>{item.name}</Text>
               <Text>Quantity: {item.quantity}</Text>
               {selectedCategory === 'catering' && (
                 <>
@@ -152,15 +152,15 @@ const InventoryScreen = () => {
                 )}
             </Card.Content>
             <Card.Actions>
-              <Button mode="contained" style={styles.editButton} onPress={() => handleEdit(item)}>Edit</Button>
-              <Button mode="contained" style={styles.deleteButton} onPress={() => confirmDelete(item)}>Delete</Button>
+              <Button mode="contained" style={sellerInv.editButton} onPress={() => handleEdit(item)}>Edit</Button>
+              <Button mode="contained" style={sellerInv.deleteButton} onPress={() => confirmDelete(item)}>Delete</Button>
             </Card.Actions>
           </Card>
         ))}
       </ScrollView>
 
       <FAB
-        style={styles.fab}
+        style={sellerInv.fab}
         icon="plus"
         onPress={() => {
           setEditItem(null);
@@ -172,12 +172,12 @@ const InventoryScreen = () => {
 
       {/* Edit/Add Modal */}
       <Modal visible={modalVisible} transparent={true}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
+        <View style={sellerInv.modalContainer}>
+          <View style={sellerInv.modalContent}>
             <Text>{editItem ? 'Edit Item' : 'Add Item'}</Text>
 
             {/* Display Errors*/}
-            {error ? <Text style={styles.errorText}>{error}</Text> : null}
+            {error ? <Text style={sellerInv.errorText}>{error}</Text> : null}
 
             <TextInput
               placeholder="Item Name"
@@ -209,7 +209,7 @@ const InventoryScreen = () => {
               </>
             )}
 
-            <Button onPress={handleSave} style={styles.saveButton} labelStyle={{ color: 'white' }} >Save</Button>
+            <Button onPress={handleSave} style={sellerInv.saveButton} labelStyle={{ color: 'white' }} >Save</Button>
             <Button onPress={() => setModalVisible(false)}>Cancel</Button>
           </View>
         </View>
@@ -217,10 +217,10 @@ const InventoryScreen = () => {
 
          {/* Delete Confirmation Modal */}
          <Modal visible={deleteModalVisible} transparent={true}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
+        <View style={sellerInv.modalContainer}>
+          <View style={sellerInv.modalContent}>
             <Text>Are you sure you want to delete {deleteItem?.name}?</Text>
-            <Button onPress={handleDelete} style={styles.deleteButton} labelStyle={{ color: 'white' }} >Delete</Button>
+            <Button onPress={handleDelete} style={sellerInv.deleteButton} labelStyle={{ color: 'white' }} >Delete</Button>
             <Button onPress={() => setDeleteModalVisible(false)}>Cancel</Button>
           </View>
         </View>
@@ -235,65 +235,5 @@ const InventoryScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#fff',
-  },
-  errorText: {
-    color: 'red',
-    marginBottom: 10,
-  },
-  categoryTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 10,
-  },
-  searchInput: {
-    marginVertical: 10,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 5,
-  },
-  card: {
-    marginVertical: 8,
-    padding: 10,
-    backgroundColor: '#e8f5e9',
-  },
-  cardTitle: {
-    fontWeight: 'bold',
-    color: '#2e7d32',
-  },
-  editButton: {
-    backgroundColor: '#ff9800',
-  },
-  saveButton: {
-    backgroundColor: '#006400',
-  },
-  deleteButton: {
-    backgroundColor: '#d32f2f',
-  },
-  fab: {
-    position: 'absolute',
-    right: 20,
-    bottom: 20,
-    backgroundColor: '#2e7d32',
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    width: '80%',
-  },
-});
 
 export default InventoryScreen;
