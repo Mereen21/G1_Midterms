@@ -14,10 +14,10 @@ const AdminNav = () => {
   //Routes and icons for navbar
   const [routes] = React.useState([
     { key: 'dashboard', title: 'Home', icon: 'home' },
-    { key: 'orders', title: 'Menu', icon: 'clipboard-text', disabled: true }, 
-    { key: 'pos', title: 'POS', icon: 'cash-register', disabled: true }, 
-    { key: 'bookings', title: 'Content', icon: 'calendar', disabled: true }, 
-    { key: 'inventory', title: 'Analytics', icon: 'archive',disabled: true  },
+    { key: 'orders', title: 'Menu', icon: 'clipboard-text', disabled: true },
+    { key: 'pos', title: 'POS', icon: 'cash-register', disabled: true },
+    { key: 'bookings', title: 'Content', icon: 'calendar', disabled: true },
+    { key: 'inventory', title: 'Analytics', icon: 'archive', disabled: true },
     { key: 'usermanage', title: 'User', icon: 'account' },
   ]);
 
@@ -25,16 +25,16 @@ const AdminNav = () => {
   const renderScene = BottomNavigation.SceneMap({
     dashboard: AdminPageScreen,
     usermanage: UserAccountManagementScreen,
-    
+
   });
 
   const handleIndexChange = (newIndex) => {
     const selectedRoute = routes[newIndex];
 
     if (selectedRoute.disabled) {
-      setSnackbarVisible(true); 
+      setSnackbarVisible(true);
     } else {
-      setIndex(newIndex); 
+      setIndex(newIndex);
     }
   };
 
@@ -51,10 +51,12 @@ const AdminNav = () => {
             color={focused ? '#FFA500' : '#B0B0B0'}
           />
         )}
-        barStyle={{backgroundColor: '#222'}} //lipat nalang sa separate css mamaya
+        barStyle={{ backgroundColor: '#222' }} //lipat nalang sa separate css mamaya
+        activeColor="#FFA500"
+        inactiveColor="#B0B0B0"
       />
 
-  {/* Snackbar to Alert Features for show */}
+      {/* Snackbar to Alert Features for show */}
       <Snackbar
         visible={snackbarVisible}
         onDismiss={() => setSnackbarVisible(false)}
@@ -64,7 +66,7 @@ const AdminNav = () => {
         }}
         duration={3000}
       >
-        🚧 Oops! This button is just for show. Come check back soon! 
+        🚧 Oops! This button is just for show. Come check back soon!
       </Snackbar>
     </View>
   );

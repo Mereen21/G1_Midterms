@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { View, ScrollView, TextInput, Alert, TouchableOpacity, Modal } from 'react-native';
-import { Card, Button, Menu, Text } from 'react-native-paper';
+import { Card, Button, Menu, Text, Snackbar } from 'react-native-paper';
 import { usermanageStyles } from '../../style/AdministratorStyles/UserManageStyles';
 import { mainStyle } from '../../style/MainStyles';
 
@@ -29,34 +29,37 @@ const UserAccountManagementScreen = () => {
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
 
-   // variables
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-  
-    // errorhandling
-    const [usernameError, setUsernameError] = useState('');
-    const [emailError, setEmailError] = useState('');
-    const [passwordError, setPasswordError] = useState('');
-    const [confirmPasswordError, setConfirmPasswordError] = useState('');
-    const [editModalVisible, setEditModalVisible] = useState(false);
-    const [selectedUser, setSelectedUser] = useState(null);
-  
-    const openEditModal = (user) => {
-      setSelectedUser(user);
-      setEditModalVisible(true);
-    };
-  
-    const closeEditModal = () => {
-      setSelectedUser(null);
-      setEditModalVisible(false);
-    };
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
-    const handleEditSave = () => {
-      console.log("Updated User:", selectedUser);
-      closeEditModal();
-    };
+  // variables
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  // errorhandling
+  const [usernameError, setUsernameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const openEditModal = (user) => {
+    setSelectedUser(user);
+    setEditModalVisible(true);
+  };
+
+  const closeEditModal = () => {
+    setSelectedUser(null);
+    setEditModalVisible(false);
+  };
+
+  const handleEditSave = () => {
+    console.log("Updated User:", selectedUser);
+    closeEditModal();
+  };
 
   const getUsers = () => {
     if (selectedCategory === 'all') {
@@ -113,9 +116,9 @@ const UserAccountManagementScreen = () => {
 
   };
 
-   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-   const handleModalContinue = () => {
+  const handleModalContinue = () => {
     if (isSubmitting) return;
 
     setIsSubmitting(true);
@@ -171,18 +174,17 @@ const UserAccountManagementScreen = () => {
     if (isValid) {
       setTimeout(() => {
         console.log("User Added:", { username, email });
-  
-        // Clear input fields after submission
         setUsername("");
         setEmail("");
         setPassword("");
         setConfirmPassword("");
-  
         setIsSubmitting(false);
-        closeModal(); // Close modal after successful submission
+        setSnackbarMessage("Add successful");
+        setSnackbarVisible(true);
+        closeModal();
       }, 1000);
     } else {
-      setIsSubmitting(false); // Ensure submission resets on error
+      setIsSubmitting(false);
     }
   };
 
@@ -200,7 +202,7 @@ const UserAccountManagementScreen = () => {
   return (
     <View style={usermanageStyles.maincontainer}>
       <Text style={usermanageStyles.categoryTitle}>
-        USER MANAGEMENT   
+        USER MANAGEMENT
       </Text>
 
       {/* Search Bar and Suggested Box in a Row */}
@@ -209,7 +211,7 @@ const UserAccountManagementScreen = () => {
           <TextInput
             style={usermanageStyles.searchInput}
             placeholder="Search users..."
-             placeholderTextColor="#FFFFFF"
+            placeholderTextColor="#FFFFFF"
             value={searchQuery}
             onChangeText={setSearchQuery}
           />
@@ -227,7 +229,7 @@ const UserAccountManagementScreen = () => {
           onDismiss={closeMenu}
           anchor={
             <Button mode="outlined" onPress={openMenu} style={usermanageStyles.categoryButton}>
-              <Text style={{color: 'white'}}>
+              <Text style={{ color: 'white' }}>
                 {selectedCategory === 'all' ? "Select Category" : selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)}
               </Text>
             </Button>
@@ -258,11 +260,11 @@ const UserAccountManagementScreen = () => {
                 </Text>
               </Card.Content>
               <Card.Actions>
-              <Button mode="contained" style={usermanageStyles.editButton} onPress={() => openEditModal(user)}>
-                  <Text style={{color: 'white'}}>Edit</Text>
+                <Button mode="contained" style={usermanageStyles.editButton} onPress={() => openEditModal(user)}>
+                  <Text style={{ color: 'white' }}>Edit</Text>
                 </Button>
                 <Button mode="contained" style={usermanageStyles.deleteButton} onPress={() => handleDelete(user)}>
-                  <Text style={{color: 'white'}}>Delete</Text>
+                  <Text style={{ color: 'white' }}>Delete</Text>
                 </Button>
               </Card.Actions>
             </Card>
@@ -282,126 +284,140 @@ const UserAccountManagementScreen = () => {
         <View style={usermanageStyles.modalContainer}>
           <View style={usermanageStyles.modalContent}>
             <Text style={usermanageStyles.modalTitle}>Add New User</Text>
-             {/* Username Input */}
-                        <View style={mainStyle.inputGroup}>
-                          <Text style={usermanageStyles.label}>Username</Text>
-                          <TextInput
-                            style={[usermanageStyles.textInput, usernameError ? mainStyle.inputError : null]}
-                            placeholder="Enter Username"
-                            value={username}
-                            onChangeText={validateName}
-                          />
-                          {usernameError ? <Text style={mainStyle.errorText}>{usernameError}</Text> : null}
-                        </View>
-            
-                        {/* Email Input */}
-                        <View style={mainStyle.inputGroup}>
-                          <Text style={usermanageStyles.label}>Email</Text>
-                          <TextInput
-                            style={[usermanageStyles.textInput, emailError ? mainStyle.inputError : null]}
-                            placeholder="Enter Email"
-                            value={email}
-                            onChangeText={validateEmail}
-                            keyboardType="email-address"
-                          />
-                          {emailError ? <Text style={mainStyle.errorText}>{emailError}</Text> : null}
-                        </View>
-            
-                        {/* Password Input */}
-                        <View style={mainStyle.inputGroup}>
-                          <Text style={usermanageStyles.label}>Password</Text>
-                          <TextInput
-                            style={[usermanageStyles.textInput, passwordError ? mainStyle.inputError : null]}
-                            placeholder="Enter Password"
-                            value={password}
-                            secureTextEntry={true}
-                            onChangeText={validatePassword}
-                          />
-                          {passwordError ? <Text style={mainStyle.errorText}>{passwordError}</Text> : null}
-                        </View>
-            
-                        {/* ConfirmPassword Input */}
-                        <View style={mainStyle.inputGroup}>
-                          <Text style={usermanageStyles.label}>Confirm Password</Text>
-                          <TextInput
-                            placeholder="Re-Enter Password"
-                            value={confirmPassword}
-                            style={[usermanageStyles.textInput, confirmPasswordError ? mainStyle.inputError : null]}
-                            onChangeText={validateConfirmPassword}
-                            secureTextEntry={true}
-                          />
-                          {confirmPasswordError ? <Text style={mainStyle.errorText}>{confirmPasswordError}</Text> : null}
-                        </View>
-                        
-            
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                          <TouchableOpacity
-                            style={[mainStyle.button, { flex: 1, marginRight: 5 }, isSubmitting ? { opacity: 0.5 } : {}]}
-                            onPress={handleModalContinue}
-                            disabled={isSubmitting}
-                          >
-                            <Text style={mainStyle.buttonText}>Add</Text>
-                          </TouchableOpacity>
+            {/* Username Input */}
+            <View style={mainStyle.inputGroup}>
+              <Text style={usermanageStyles.label}>Username</Text>
+              <TextInput
+                style={[usermanageStyles.textInput, usernameError ? mainStyle.inputError : null]}
+                placeholder="Enter Username"
+                placeholderTextColor="#5C5C5C"
+                value={username}
+                onChangeText={validateName}
+              />
+              {usernameError ? <Text style={mainStyle.errorText}>{usernameError}</Text> : null}
+            </View>
 
-                          <TouchableOpacity
-                            style={[usermanageStyles.closeButton, { flex: 1, marginLeft: 5 }, isSubmitting ? { opacity: 0.5 } : {}]}
-                            onPress={closeModal}
-                            disabled={isSubmitting}
-                          >
-                            <Text style={mainStyle.buttonText}>Close</Text>
-                          </TouchableOpacity>
-                        </View>
-                        
+            {/* Email Input */}
+            <View style={mainStyle.inputGroup}>
+              <Text style={usermanageStyles.label}>Email</Text>
+              <TextInput
+                style={[usermanageStyles.textInput, emailError ? mainStyle.inputError : null]}
+                placeholder="Enter Email"
+                placeholderTextColor="#5C5C5C"
+                value={email}
+                onChangeText={validateEmail}
+                keyboardType="email-address"
+              />
+              {emailError ? <Text style={mainStyle.errorText}>{emailError}</Text> : null}
+            </View>
+
+            {/* Password Input */}
+            <View style={mainStyle.inputGroup}>
+              <Text style={usermanageStyles.label}>Password</Text>
+              <TextInput
+                style={[usermanageStyles.textInput, passwordError ? mainStyle.inputError : null]}
+                placeholder="Enter Password"
+                placeholderTextColor="#5C5C5C"
+                value={password}
+                secureTextEntry={true}
+                onChangeText={validatePassword}
+              />
+              {passwordError ? <Text style={mainStyle.errorText}>{passwordError}</Text> : null}
+            </View>
+
+            {/* ConfirmPassword Input */}
+            <View style={mainStyle.inputGroup}>
+              <Text style={usermanageStyles.label}>Confirm Password</Text>
+              <TextInput
+                placeholder="Re-Enter Password"
+                placeholderTextColor="#5C5C5C"
+                value={confirmPassword}
+                style={[usermanageStyles.textInput, confirmPasswordError ? mainStyle.inputError : null]}
+                onChangeText={validateConfirmPassword}
+                secureTextEntry={true}
+              />
+              {confirmPasswordError ? <Text style={mainStyle.errorText}>{confirmPasswordError}</Text> : null}
+            </View>
+
+
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <TouchableOpacity
+                style={[usermanageStyles.addbutton, { flex: 1, marginRight: 5 }, isSubmitting ? { opacity: 0.5 } : {}]}
+                onPress={handleModalContinue}
+                disabled={isSubmitting}
+              >
+                <Text style={mainStyle.buttonText}>Add</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[usermanageStyles.closeButton, { flex: 1, marginLeft: 5 }, isSubmitting ? { opacity: 0.5 } : {}]}
+                onPress={closeModal}
+                disabled={isSubmitting}
+              >
+                <Text style={mainStyle.buttonText}>Close</Text>
+              </TouchableOpacity>
+            </View>
+
           </View>
         </View>
       </Modal>
 
-       {/* Edit User Modal */}
-       <Modal visible={editModalVisible} animationType="slide" transparent={true} onRequestClose={closeEditModal}>
+      {/* Edit User Modal */}
+      <Modal visible={editModalVisible} animationType="slide" transparent={true} onRequestClose={closeEditModal}>
         <View style={usermanageStyles.modalContainer}>
           <View style={usermanageStyles.modalContent}>
             <Text style={usermanageStyles.modalTitle}>Edit User</Text>
             {selectedUser && (
               <>
-              <View style={mainStyle.inputGroup}>
-              <Text style={usermanageStyles.label}>Username</Text>
-                <TextInput
-                  style={usermanageStyles.textInput}
-                  value={selectedUser.name}
-                  onChangeText={(text) => setSelectedUser({ ...selectedUser, name: text })}
-                />
+                <View style={mainStyle.inputGroup}>
+                  <Text style={usermanageStyles.label}>Username</Text>
+                  <TextInput
+                    style={usermanageStyles.textInput}
+                    value={selectedUser.name}
+                    onChangeText={(text) => setSelectedUser({ ...selectedUser, name: text })}
+                  />
                 </View>
 
                 <View style={mainStyle.inputGroup}>
-                <Text style={usermanageStyles.label}>Email</Text>
-                <TextInput
-                  style={usermanageStyles.textInput}
-                  value={selectedUser.email}
-                  onChangeText={(text) => setSelectedUser({ ...selectedUser, email: text })}
-                />
+                  <Text style={usermanageStyles.label}>Email</Text>
+                  <TextInput
+                    style={usermanageStyles.textInput}
+                    value={selectedUser.email}
+                    onChangeText={(text) => setSelectedUser({ ...selectedUser, email: text })}
+                  />
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                          <TouchableOpacity
-                            style={[mainStyle.button, { flex: 1, marginRight: 5 }, isSubmitting ? { opacity: 0.5 } : {}]}
-                            onPress={handleEditSave}
-                            disabled={isSubmitting}
-                          >
-                            <Text style={mainStyle.buttonText}>Save</Text>
-                          </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[mainStyle.button, { flex: 1, marginRight: 5 }, isSubmitting ? { opacity: 0.5 } : {}]}
+                    onPress={handleEditSave}
+                    disabled={isSubmitting}
+                  >
+                    <Text style={mainStyle.buttonText}>Save</Text>
+                  </TouchableOpacity>
 
-                          <TouchableOpacity
-                            style={[usermanageStyles.closeButton, { flex: 1, marginLeft: 5 }, isSubmitting ? { opacity: 0.5 } : {}]}
-                            onPress={closeEditModal}
-                            disabled={isSubmitting}
-                          >
-                            <Text style={mainStyle.buttonText}>Close</Text>
-                          </TouchableOpacity>
-                        </View>
+                  <TouchableOpacity
+                    style={[usermanageStyles.closeButton, { flex: 1, marginLeft: 5 }, isSubmitting ? { opacity: 0.5 } : {}]}
+                    onPress={closeEditModal}
+                    disabled={isSubmitting}
+                  >
+                    <Text style={mainStyle.buttonText}>Close</Text>
+                  </TouchableOpacity>
+                </View>
               </>
             )}
           </View>
         </View>
       </Modal>
+
+      <Snackbar
+        visible={snackbarVisible}
+        onDismiss={() => setSnackbarVisible(false)}
+        duration={3000}
+      >
+        {snackbarMessage}
+      </Snackbar>;
+
+
     </View>
   );
 };
