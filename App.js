@@ -18,6 +18,7 @@ import AdminNav from './src/screens/Admin/AdminNav';
 import SellerNav from './src/screens/seller/SellerNav';
 import SellerInventory from './src/screens/seller/SellerInventory';
 import UserNavBar from './src/screens/User/UserNavBar';
+import OrdersandEventScreen from './src/screens/seller/OrdersandReservations';
 
 const Stack = createStackNavigator();
 
@@ -62,6 +63,10 @@ const App = () => {
               <Stack.Screen
                 name="SellerInventoryPage"
                 component={SellerInventory}
+              />
+                <Stack.Screen
+                name="OrdersandEventsPage"
+                component={OrdersandEventScreen}
               />
               <Stack.Screen name="UserNavBar" component={UserNavBar} />
             </Stack.Navigator>
