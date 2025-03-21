@@ -1,20 +1,39 @@
 import * as React from 'react';
-import { View, StyleSheet, ScrollView, TextInput, Modal, Alert } from 'react-native';
-import { Card, Button, Menu, FAB, Text } from 'react-native-paper';
+import { View, StyleSheet, ScrollView, TextInput, Modal, Alert , ToastAndroid} from 'react-native';
+import { Card, Button, Menu, FAB, Text,Snackbar, Chip } from 'react-native-paper';
 
 const inventoryData = {
   orders: [
-    { key: 1, name: 'Food Tray', quantity: 50 },
-    { key: 2, name: 'Packaging Box', quantity: 100 },
+    { key: 1, name: 'Food Tray', quantity: 50,status: 'In-Stock' },
+    { key: 2, name: 'Packaging Box', quantity: 100,status: 'In-Stock' },
   ],
   frozen: [
-    { key: 3, name: 'Frozen Chicken', quantity: 20 },
-    { key: 4, name: 'Frozen Beef', quantity: 15 },
+    { key: 3, name: 'Frozen Chicken', quantity: 20, status:'Low Stock' },
+    { key: 4, name: 'Frozen Longganisa', quantity: 10, status:'Restock' },
+    { key: 5, name: 'Frozen Dumplings', quantity: 20, status:'Low Stock' },
+    { key: 6, name: 'Frozen Beef', quantity: 100, status: 'In-Stock' },
   ],
   catering: [
-    { key: 5, name: 'Serving Tray', quantity: 30, event: 'Wedding' },
-    { key: 6, name: 'Plates', quantity: 200, event: 'Corporate Event' },
+    { key: 7, name: 'Serving Tray', quantity: 30, egress: 20, event: 'Wedding' },
+    { key: 8, name: 'Plates', quantity: 100, egress: 80, event: 'Wedding' },
+    { key: 9, name: 'Forks', quantity: 100, egress: 70, event: 'Wedding' },
+    { key: 10, name: 'Spoons', quantity: 100, egress: 70, event: 'Wedding' },
+    { key: 11, name: 'Glass', quantity: 100, egress: 70, event: 'Wedding' },
+    { key: 12, name: 'Pitchers', quantity: 20, egress: 20, event: 'Wedding' },
   ],
+};
+
+const getStatusStyle = (status) => {
+  switch (status) {
+    case 'In-Stock':
+      return { backgroundColor: 'green', color: 'white' };
+    case 'Low Stock':
+      return { backgroundColor: 'yellow', color: 'black' };
+    case 'Restock':
+      return { backgroundColor: 'red', color: 'white' };
+    default:
+      return { backgroundColor: 'gray', color: 'white' };
+  }
 };
 
 const InventoryScreen = () => {
@@ -25,7 +44,9 @@ const InventoryScreen = () => {
   const [editItem, setEditItem] = React.useState(null);
   const [newItem, setNewItem] = React.useState({ name: '', quantity: '', event: '' });
   const [error, setError] = React.useState('');
-
+  const [deleteModalVisible, setDeleteModalVisible] = React.useState(false);
+  const [snackbarVisible, setSnackbarVisible] = React.useState(false);
+  const [deleteItem, setDeleteItem] = React.useState(null);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
 
@@ -33,33 +54,58 @@ const InventoryScreen = () => {
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+
   const handleEdit = (item) => {
     setEditItem(item);
-    setNewItem({ name: item.name, quantity: String(item.quantity), event: item.event || '' });
+    setNewItem({
+      name: item.name,
+      quantity: String(item.quantity),
+      egress: item.egress ? String(item.egress) : '',
+      event: item.event || ''
+    });
     setModalVisible(true);
   };
 
-  const handleDelete = (item) => {
-    Alert.alert(
-      "Confirm Deletion",
-      `Are you sure you want to delete ${item.name}?`,
-      [
-        { text: "Cancel", style: "cancel" },
-        { text: "Delete", onPress: () => console.log("Deleted", item), style: "destructive" }
-      ]
-    );
+  const confirmDelete = (item) => {
+    setDeleteItem(item);
+    setDeleteModalVisible(true);
+  };
+
+  const handleDelete = () => {
+    console.log("Deleted:", deleteItem);
+    setDeleteModalVisible(false);
+    setDeleteItem(null);
   };
 
   const handleSave = () => {
-    if (!newItem.name || !newItem.quantity || (selectedCategory === 'catering' && !newItem.event)) {
-      setError('All fields are required.');
+    let errors = [];
+  
+    // Require Fields
+    if (!newItem.name.trim()) errors.push("Item name is required.");
+    if (!newItem.quantity.trim()) errors.push("Quantity is required.");
+    
+    //Number Fields
+    const quantity = parseInt(newItem.quantity, 10);
+    const egress = parseInt(newItem.egress, 10) || 0;
+  
+    if (isNaN(quantity) || quantity < 0) errors.push("Quantity must be a positive number.");
+    if (selectedCategory === "catering") {
+      if (isNaN(egress) || egress < 0) errors.push("Egress must be a positive number.");
+      if (!newItem.event.trim()) errors.push("Event name is required.");
+    }
+  
+    if (errors.length > 0) {
+      setError(errors.join("\n"));
       return;
     }
-    setError('');
+  
+    setError("");
+    setSnackbarVisible(true);
     console.log(editItem ? 'Updating item' : 'Adding item', newItem);
+    
     setModalVisible(false);
     setEditItem(null);
-    setNewItem({ name: '', quantity: '', event: '' });
+    setNewItem({ name: '', quantity: '', egress: '', event: '' });
   };
 
   return (
@@ -87,13 +133,27 @@ const InventoryScreen = () => {
         {items.map((item) => (
           <Card key={item.key} style={styles.card}>
             <Card.Content>
-              <Text variant="titleMedium" style={styles.cardTitle}>{item.name}</Text>
+              <Text style={styles.cardTitle}>{item.name}</Text>
               <Text>Quantity: {item.quantity}</Text>
-              {selectedCategory === 'catering' && <Text>Event: {item.event}</Text>}
+              {selectedCategory === 'catering' && (
+                <>
+                  <Text>Egress: {item.egress}</Text>
+                  <Text>Total: {item.quantity - item.egress}</Text>
+                  <Text>Event: {item.event}</Text>
+                </>
+              )}
+               {(selectedCategory === 'orders' || selectedCategory === 'frozen') && (
+                  <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 5 }}>
+                    <Text>Status: </Text>
+                    <Chip style={{ backgroundColor: getStatusStyle(item.status).backgroundColor }}>
+                      <Text style={{ color: getStatusStyle(item.status).color }}>{item.status}</Text>
+                    </Chip>
+                  </View>
+                )}
             </Card.Content>
             <Card.Actions>
               <Button mode="contained" style={styles.editButton} onPress={() => handleEdit(item)}>Edit</Button>
-              <Button mode="contained" style={styles.deleteButton} onPress={() => handleDelete(item)}>Delete</Button>
+              <Button mode="contained" style={styles.deleteButton} onPress={() => confirmDelete(item)}>Delete</Button>
             </Card.Actions>
           </Card>
         ))}
@@ -104,25 +164,73 @@ const InventoryScreen = () => {
         icon="plus"
         onPress={() => {
           setEditItem(null);
-          setNewItem({ name: '', quantity: '', event: '' });
+          setNewItem({ name: '', quantity: '', egress: '', event: '' });
           setModalVisible(true);
         }}
       />
+
 
       {/* Edit/Add Modal */}
       <Modal visible={modalVisible} transparent={true}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text>{editItem ? 'Edit Item' : 'Add Item'}</Text>
+
+            {/* Display Errors*/}
             {error ? <Text style={styles.errorText}>{error}</Text> : null}
-            <TextInput placeholder="Item Name" value={newItem.name} onChangeText={(text) => setNewItem({ ...newItem, name: text })} />
-            <TextInput placeholder="Quantity" keyboardType="numeric" value={newItem.quantity} onChangeText={(text) => setNewItem({ ...newItem, quantity: text })} />
-            {selectedCategory === 'catering' && <TextInput placeholder="Event" value={newItem.event} onChangeText={(text) => setNewItem({ ...newItem, event: text })} />}
-            <Button onPress={handleSave}>Save</Button>
-            <Button onPress={() => setModalVisible(false)} color="red">Cancel</Button>
+
+            <TextInput
+              placeholder="Item Name"
+              value={newItem.name}
+              onChangeText={(text) => setNewItem({ ...newItem, name: text })}
+            />
+            
+            <TextInput
+              placeholder="Quantity"
+              keyboardType="numeric"
+              value={newItem.quantity}
+              onChangeText={(text) => setNewItem({ ...newItem, quantity: text })}
+            />
+
+            {selectedCategory === 'catering' && (
+              <>
+                <TextInput
+                  placeholder="Egress (Used Items)"
+                  keyboardType="numeric"
+                  value={newItem.egress}
+                  onChangeText={(text) => setNewItem({ ...newItem, egress: text })}
+                />
+
+                <TextInput
+                  placeholder="Event"
+                  value={newItem.event}
+                  onChangeText={(text) => setNewItem({ ...newItem, event: text })}
+                />
+              </>
+            )}
+
+            <Button onPress={handleSave} style={styles.saveButton} labelStyle={{ color: 'white' }} >Save</Button>
+            <Button onPress={() => setModalVisible(false)}>Cancel</Button>
           </View>
         </View>
       </Modal>
+
+         {/* Delete Confirmation Modal */}
+         <Modal visible={deleteModalVisible} transparent={true}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text>Are you sure you want to delete {deleteItem?.name}?</Text>
+            <Button onPress={handleDelete} style={styles.deleteButton} labelStyle={{ color: 'white' }} >Delete</Button>
+            <Button onPress={() => setDeleteModalVisible(false)}>Cancel</Button>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Snackbar */}
+      <Snackbar visible={snackbarVisible} onDismiss={() => setSnackbarVisible(false)} duration={2000}>
+        Changes saved successfully!
+      </Snackbar>
+
     </View>
   );
 };
@@ -161,6 +269,9 @@ const styles = StyleSheet.create({
   },
   editButton: {
     backgroundColor: '#ff9800',
+  },
+  saveButton: {
+    backgroundColor: '#006400',
   },
   deleteButton: {
     backgroundColor: '#d32f2f',

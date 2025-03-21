@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, ScrollView, Dimensions, Image,Pressable } from 'react-native';
 import { Button, Text, Card, Chip} from 'react-native-paper';
-import { BarChart } from 'react-native-chart-kit';
+import { BarChart, LineChart } from 'react-native-chart-kit';
 
 import { sellerDashstyles } from '../../style/SellerStyles.js/SellerDashboardStyles';
 
@@ -41,17 +41,32 @@ const dailyBookings = () => ({
 // Sales Overview Data
 const monthlySales = () => ({
   labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
-  datasets: [{ data: [5000, 8000, 6000, 9000] }],
+  datasets: [
+    {
+      data: [20000, 25000, 2800, 8000, 9900], // Y-axis values
+      strokeWidth: 2, // Line thickness
+    },
+  ],
 });
 
 const weeklySales = () => ({
   labels: ["M", "T", "W", "Th", "F", "S"],
-  datasets: [{ data: [1200, 1500, 1000, 1800, 1600, 1400] }],
+  datasets: [
+    {
+      data: [2500, 4500, 2800, 8000, 1900], // Y-axis values
+      strokeWidth: 2, // Line thickness
+    },
+  ],
 });
 
 const dailySales = () => ({
   labels: ["9 AM", "12 PM", "3 PM", "6 PM"],
-  datasets: [{ data: [1200, 800, 1500, 1100] }],
+  datasets: [
+    {
+      data: [2000, 1500, 200, 900, 99], // Y-axis values
+      strokeWidth: 2, // Line thickness
+    },
+  ],
 });
 
 const defaultChartConfig = {
@@ -133,15 +148,15 @@ const SellerDashboard = ({navigation}) => {
         </Text>
 
         <View style={sellerDashstyles.chartContainer}>
-          <BarChart
-            data={chartData3}
-            width={screenWidth - 100} 
-            height={250}
-            chartConfig={defaultChartConfig}
-            showValuesOnTopOfBars={true}
-            style={sellerDashstyles.chart}
-          />
-        </View>
+        <LineChart
+          data={chartData3} 
+          width={screenWidth - 90} 
+          height={250}
+          chartConfig={defaultChartConfig}
+          bezier  // Optional: Makes the line smooth
+          style={sellerDashstyles.chart}
+        />
+      </View>
       </Card.Content>
     </Card>
 
