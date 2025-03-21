@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SellerDashboard from './SellerDashboard';
 import SellerInventory from './SellerInventory';
 import EditProfileScreen from './EditProfile';
+import OrdersandEventScreen from './OrdersandReservations';
 
 const SellerNav = () => {
   const [index, setIndex] = React.useState(0);
@@ -14,8 +15,7 @@ const SellerNav = () => {
   //Routes and icons for navbar
   const [routes] = React.useState([
     { key: 'dashboard', title: 'Home', icon: 'home' },
-    { key: 'orders', title: 'Orders', icon: 'clipboard-text', disabled: true }, 
-    { key: 'bookings', title: 'Bookings', icon: 'calendar', disabled: true },
+    { key: 'ordersandbookings', title: 'Orders & Bookings', icon: 'clipboard-text'}, 
     { key: 'inventory', title: 'Inventory', icon: 'archive' },
     { key: 'customerdatabase', title: 'Customers', icon: 'account-search', disabled: true },
     { key: 'profile', title: 'Profile', icon: 'account' },
@@ -24,6 +24,7 @@ const SellerNav = () => {
   //Declare Screens Here
   const renderScene = BottomNavigation.SceneMap({
     dashboard: SellerDashboard,
+    ordersandbookings: OrdersandEventScreen,
     inventory: SellerInventory,
     profile: EditProfileScreen,
   });

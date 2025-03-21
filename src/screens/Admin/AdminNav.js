@@ -15,6 +15,7 @@ const AdminNav = () => {
   const [routes] = React.useState([
     { key: 'dashboard', title: 'Home', icon: 'home' },
     { key: 'orders', title: 'Menu', icon: 'clipboard-text', disabled: true }, 
+    { key: 'pos', title: 'POS', icon: 'cash-register', disabled: true }, 
     { key: 'bookings', title: 'Content', icon: 'calendar', disabled: true }, 
     { key: 'inventory', title: 'Analytics', icon: 'archive',disabled: true  },
     { key: 'usermanage', title: 'User', icon: 'account' },

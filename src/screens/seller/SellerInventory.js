@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, ScrollView, TextInput, Modal, Alert , ToastAndroid} from 'react-native';
+import { View, ScrollView, TextInput, Modal} from 'react-native';
 import { Card, Button, Menu, FAB, Text,Snackbar, Chip } from 'react-native-paper';
 import { sellerInv } from '../../style/SellerStyles.js/SellerInventoryStyles';
 const inventoryData = {

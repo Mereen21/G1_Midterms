@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   Text,
   View,
@@ -8,10 +8,13 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { Snackbar } from 'react-native-paper';
+import { Provider, Snackbar, Modal, Portal} from 'react-native-paper';
 import { editStyle } from '../../style/EditProfileStyle';
+import { CommonActions, useNavigation } from '@react-navigation/native';
+
 
 const EditProfileScreen = ({ route }) => {
+  const navigation = useNavigation();
   const [username, setUsername] = useState('');
   const [usernameError, setUsernameError] = useState('');
   const [email, setEmail] = useState('');
@@ -23,6 +26,7 @@ const EditProfileScreen = ({ route }) => {
   const avatar = route.params?.avatar || require('../../assets/admin-items/staff.jpg');
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [logoutModalVisible, setLogoutModalVisible] = useState(false);
 
   // Username Validation
   const validateUsername = (text) => {
@@ -60,7 +64,6 @@ const EditProfileScreen = ({ route }) => {
       setPasswordError('');
     }
 
-    //If password is empty reset confirm pass
     if (!text) {
       setConfirmPassword('');
       setConfirmPasswordError('');
@@ -100,8 +103,25 @@ const EditProfileScreen = ({ route }) => {
       setSnackbarVisible(true);
     }
   };
+  const handleLogout = () => {
+    setLogoutModalVisible(false); 
+  
+    // Reset nav
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'LoginScreen',
+            params: { loggedOut: true }, 
+          },
+        ],
+      })
+    );
+  };
 
   return (
+    <Provider>
     <ImageBackground
       source={require('../../assets/user-items/featuredbg.jpg')}
       style={editStyle.container}
@@ -179,6 +199,13 @@ const EditProfileScreen = ({ route }) => {
                 <Text style={editStyle.buttonText}>Save Changes</Text>
               </TouchableOpacity>
 
+                 {/* Logout Button */}
+                 <TouchableOpacity
+                style={[editStyle.button, { backgroundColor: 'red', marginTop: 10 }]}
+                onPress={() => setLogoutModalVisible(true)}
+              >
+                <Text style={editStyle.buttonText}>Log Out</Text>
+              </TouchableOpacity>
             </View>
           </ScrollView>
         </View>
@@ -192,7 +219,31 @@ const EditProfileScreen = ({ route }) => {
         {snackbarMessage}
       </Snackbar>
 
+            {/* Logout Confirmation Modal */}
+         <Portal>
+          <Modal
+            visible={logoutModalVisible}
+            onDismiss={() => setLogoutModalVisible(false)}
+            contentContainerStyle={editStyle.modalContainer}
+          >
+            <View style={editStyle.modalContent}>
+              <Text style={editStyle.modalText}>Are you sure you want to log out?</Text>
+              <View style={editStyle.buttonContainer}>
+                <TouchableOpacity style={editStyle.logoutButton} onPress={handleLogout}>
+                  <Text style={editStyle.buttonText}>Yes</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[editStyle.cancelButton]}
+                  onPress={() => setLogoutModalVisible(false)}
+                >
+                  <Text style={editStyle.buttonText}>Cancel</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+        </Portal>
     </ImageBackground>
+    </Provider>
   );
 };
 

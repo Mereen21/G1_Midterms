@@ -1,12 +1,11 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { View, ScrollView, Dimensions, Image,Pressable } from 'react-native';
 import { Button, Text, Card, Chip} from 'react-native-paper';
 import { BarChart, LineChart } from 'react-native-chart-kit';
-
 import { sellerDashstyles } from '../../style/SellerStyles.js/SellerDashboardStyles';
+import { useNavigation } from '@react-navigation/native';
 
 const screenWidth = Dimensions.get("window").width;
-
 // Functions returning different datasets
 const monthlyOrders = () => ({
   labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
@@ -43,8 +42,7 @@ const monthlySales = () => ({
   labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
   datasets: [
     {
-      data: [20000, 25000, 2800, 8000, 9900], // Y-axis values
-      strokeWidth: 2, // Line thickness
+      data: [20000, 25000, 2800, 8000, 9900], 
     },
   ],
 });
@@ -53,8 +51,8 @@ const weeklySales = () => ({
   labels: ["M", "T", "W", "Th", "F", "S"],
   datasets: [
     {
-      data: [2500, 4500, 2800, 8000, 1900], // Y-axis values
-      strokeWidth: 2, // Line thickness
+      data: [2500, 4500, 2800, 8000, 1900], 
+      strokeWidth: 2,
     },
   ],
 });
@@ -63,8 +61,8 @@ const dailySales = () => ({
   labels: ["9 AM", "12 PM", "3 PM", "6 PM"],
   datasets: [
     {
-      data: [2000, 1500, 200, 900, 99], // Y-axis values
-      strokeWidth: 2, // Line thickness
+      data: [2000, 1500, 200, 900, 99], 
+      strokeWidth: 2, 
     },
   ],
 });
@@ -79,14 +77,14 @@ const defaultChartConfig = {
   style: { borderRadius: 16 },
 };
 
-const SellerDashboard = ({navigation}) => {
-  const [filter, setFilter] = React.useState("This Month");
-  const [filter2, setFilter2] = React.useState("This Month");
-  const [filter3, setFilter3] = React.useState("This Month");
-  const [chartData, setChartData] = React.useState(monthlyOrders());
-  const [chartData2, setChartData2] = React.useState(monthlyBookings());
-  const [chartData3, setChartData3] = React.useState(monthlySales());
-
+const SellerDashboard = () => {
+  const [filter, setFilter] = useState("This Month");
+  const [filter2, setFilter2] = useState("This Month");
+  const [filter3, setFilter3] = useState("This Month");
+  const [chartData, setChartData] = useState(monthlyOrders());
+  const [chartData2, setChartData2] = useState(monthlyBookings());
+  const [chartData3, setChartData3] = useState(monthlySales());
+  const navigation = useNavigation();
   // Change Data Set
   const updateChartData = (selectedFilter) => {
     setFilter(selectedFilter);
@@ -120,7 +118,7 @@ const SellerDashboard = ({navigation}) => {
 
         {/* User Avatar*/}
         <Pressable onPress={() => navigation.navigate("EditProfileScreen", { avatar: require("../../assets/admin-items/staff.jpg") })}>
-          <Image source={require("../../assets/admin-items/staff.jpg")} style={sellerDashstyles.userAvatar} />
+        <Image source={require("../../assets/admin-items/staff.jpg")} style={sellerDashstyles.userAvatar} />
         </Pressable>
 
       </View>

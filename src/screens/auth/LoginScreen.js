@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {
   Text,
   View,
@@ -7,11 +7,12 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
+  BackHandler
 } from 'react-native';
 import {Snackbar} from 'react-native-paper';
 import {mainStyle} from '../../style/MainStyles';
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({navigation,route}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [usernameError, setUsernameError] = useState('');
@@ -20,6 +21,26 @@ const LoginScreen = ({navigation}) => {
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [loading, setLoading] = useState(false);
+
+
+  useEffect(() => {
+    const backAction = () => {
+      if (route.params?.loggedOut) {
+       
+        BackHandler.exitApp(); 
+        return true; 
+      }
+      return false; 
+    };
+
+    
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [route.params]);
 
   const handleInputChange = (text, field) => {
     if (field === 'username') {

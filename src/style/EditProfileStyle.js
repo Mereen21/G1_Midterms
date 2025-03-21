@@ -141,4 +141,56 @@ export const editStyle = StyleSheet.create({
     textAlign: "center",
     marginTop: 40,
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)', // Dim background effect
+  },
+  
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+    alignItems: 'center', 
+  },
+  
+  modalText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginTop: 10,
+  },
+  
+  logoutButton: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#d9534f',
+    borderRadius: 5,
+    alignItems: 'center',
+    marginRight: 5,
+  },
+  
+  cancelButton: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#ccc',
+    borderRadius: 5,
+    alignItems: 'center',
+    marginLeft: 5,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    // width: '100%',
+  },
+  
 });
